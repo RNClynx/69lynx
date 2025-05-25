@@ -39,21 +39,26 @@
     100% { background-position: 50px 50px, 50px 50px; }
   }
 
-  /* Falling teal lines container fixed at top */
+  /* Falling teal lines containers fixed left and right */
   .falling-lines {
     position: fixed;
     top: 0;
-    left: 0;
-    right: 0;
-    height: 120px;
+    bottom: 0;
+    width: 12vw; /* narrow vertical strips */
     pointer-events: none;
     overflow: visible;
-    z-index: 15; /* Above main content but below fade-bottom */
+    z-index: 15; /* above main content */
     display: flex;
-    justify-content: space-around;
-    align-items: flex-start;
-    gap: 10px;
-    padding: 0 5px;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding-top: 10px;
+  }
+  .falling-lines.left {
+    left: 0;
+  }
+  .falling-lines.right {
+    right: 0;
   }
 
   /* Each individual line */
@@ -73,7 +78,7 @@
       opacity: 1;
     }
     100% {
-      transform: translateY(130px);
+      transform: translateY(110vh);
       opacity: 0;
     }
   }
@@ -263,13 +268,13 @@
     z-index: 20;
   }
 
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
 
-body::after {
+  body::after {
     content: "";
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
@@ -294,7 +299,10 @@ body::after {
 </head>
 <body>
 
-  <div class="falling-lines" id="fallingLines"></div>
+  <!-- Left side falling lines -->
+  <div class="falling-lines left" id="fallingLinesLeft"></div>
+  <!-- Right side falling lines -->
+  <div class="falling-lines right" id="fallingLinesRight"></div>
 
   <div class="container">
     <h1>Lynx</h1>
@@ -337,20 +345,22 @@ body::after {
   <div class="fade-bottom"></div>
 
 <script>
-  const container = document.getElementById('fallingLines');
-  const linesCount = 30; // number of lines
-
-  for (let i = 0; i < linesCount; i++) {
-    const line = document.createElement('div');
-    line.classList.add('falling-line');
-    // Random duration between 3s and 6s for variety
-    const duration = (Math.random() * 3 + 3).toFixed(2);
-    // Random delay between 0 and 6s to spread out lines
-    const delay = (Math.random() * 6).toFixed(2);
-    line.style.animationDuration = `${duration}s`;
-    line.style.animationDelay = `${delay}s`;
-    container.appendChild(line);
+  function createLines(container, count) {
+    for (let i = 0; i < count; i++) {
+      const line = document.createElement('div');
+      line.classList.add('falling-line');
+      // Random duration between 3s and 6s for variety
+      const duration = (Math.random() * 3 + 3).toFixed(2);
+      // Random delay between 0 and 6s to spread out lines
+      const delay = (Math.random() * 6).toFixed(2);
+      line.style.animationDuration = `${duration}s`;
+      line.style.animationDelay = `${delay}s`;
+      container.appendChild(line);
+    }
   }
+
+  createLines(document.getElementById('fallingLinesLeft'), 15);
+  createLines(document.getElementById('fallingLinesRight'), 15);
 </script>
 
 </body>
