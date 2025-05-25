@@ -1,23 +1,101 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>69Lynx</title>
-  <style>
-    body {
-      background: #000;
-      color: #0ff;
-      font-family: monospace;
-      text-align: center;
-      padding-top: 50px;
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>69Lynx</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=JetBrains+Mono&display=swap" rel="stylesheet" />
+<style>
+  body {
+    margin: 0;
+    font-family: 'JetBrains Mono', monospace;
+    background: radial-gradient(ellipse at center, #111 0%, #000 100%);
+    color: #00ffcc;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+  }
+  h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 3em;
+    margin-bottom: 0.2em;
+    letter-spacing: 2px;
+  }
+  p {
+    color: #aaa;
+    font-size: 1.2em;
+    max-width: 600px;
+  }
+  .links {
+    margin-top: 2em;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7em;
+  }
+  .links a {
+    position: relative;
+    text-decoration: none;
+    color: #00ffcc;
+    background: #111;
+    border: 1px solid #00ffcc88;
+    padding: 0.7em 1.2em;
+    border-radius: 6px;
+    transition: 0.3s ease;
+    font-weight: 600;
+    overflow: hidden;
+  }
+  /* Neon glow underline */
+  .links a::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background: #ff0080;
+    bottom: 0;
+    left: 0;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease;
+    filter: drop-shadow(0 0 5px #ff0080);
+  }
+  .links a:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+  /* Flicker glitch effect */
+  @keyframes flicker {
+    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+      opacity: 1;
+      text-shadow:
+        0 0 5px #ff0080,
+        0 0 10px #ff0080,
+        0 0 20px #ff0080,
+        0 0 40px #ff0080;
     }
-    a { color: #f0f; text-decoration: none; }
-  </style>
+    20%, 22%, 24%, 55% {
+      opacity: 0.6;
+      text-shadow: none;
+    }
+  }
+  .glitch-link:hover {
+    animation: flicker 1.5s infinite;
+  }
+</style>
 </head>
 <body>
-  <h1>😼 69Lynx</h1>
-  <p>Welcome to the underground.</p>
-  <p><a href="https://twitter.com/yourhandle">Follow the trail</a></p>
+  <h1>69Lynx</h1>
+  <p class="glitch-link">
+    <a href="https://github.com/RNClynx" target="_blank" class="glitch-link">Follow the trail</a>
+  </p>
+  <div class="links">
+    <a href="https://github.com/RNClynx" target="_blank">GitHub</a>
+    <a href="https://69lynx-com.l.ink/" target="_blank">Old L.ink Page</a>
+    <a href="mailto:69lynx@protonmail.com">Email Me</a>
+  </div>
+  <footer>© 2025 69Lynx. No rights reserved.</footer>
 </body>
 </html>
 
