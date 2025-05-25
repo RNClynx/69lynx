@@ -1,135 +1,177 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Lynx</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=JetBrains+Mono&display=swap" rel="stylesheet" />
-  <style>
-    body {
-      margin: 0;
-      font-family: 'JetBrains Mono', monospace;
-      background: radial-gradient(ellipse at center, #111 0%, #000 100%);
-      color: #00ffcc;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      text-align: center;
-      overflow: hidden;
-    }
-    h1 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 3.5em;
-      margin-bottom: 0.2em;
-      letter-spacing: 2px;
-      color: #ff0080;
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Lynx - Follow the Trail</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=JetBrains+Mono&display=swap');
+
+  /* Reset */
+  * {
+    margin: 0; padding: 0; box-sizing: border-box;
+  }
+  body, html {
+    height: 100%;
+    font-family: 'JetBrains Mono', monospace;
+    background: #000;
+    color: #00ffcc;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+    position: relative;
+  }
+
+  /* Neon Grid Background */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background:
+      linear-gradient(to right, #0ff2 1px, transparent 1px),
+      linear-gradient(to bottom, #0ff2 1px, transparent 1px);
+    background-size: 50px 50px;
+    z-index: 0;
+    animation: gridShift 15s linear infinite;
+    pointer-events: none;
+  }
+  @keyframes gridShift {
+    0% { background-position: 0 0, 0 0; }
+    100% { background-position: 50px 50px, 50px 50px; }
+  }
+
+  /* Main container */
+  .container {
+    max-width: 600px;
+    margin: 3rem auto 5rem;
+    padding: 1rem 2rem;
+    text-align: center;
+    position: relative;
+    z-index: 10;
+  }
+
+  /* Heading Lynx with pink glow and flicker */
+  h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 5rem;
+    color: #ff0080;
+    text-shadow:
+      0 0 5px #ff0080,
+      0 0 10px #ff0080,
+      0 0 20px #ff0080,
+      0 0 40px #ff0080;
+    animation: flicker 2s infinite alternate;
+    margin-bottom: 1rem;
+    user-select: none;
+  }
+
+  /* Follow the trail link styling */
+  .follow-trail a {
+    font-family: 'JetBrains Mono', monospace;
+    color: #ff0080;
+    font-size: 1.8rem;
+    text-decoration: none;
+    position: relative;
+    padding-bottom: 6px;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.3s ease;
+    display: inline-block;
+    user-select: none;
+  }
+  .follow-trail a:hover,
+  .follow-trail a:focus {
+    border-color: #ff0080;
+    text-shadow:
+      0 0 5px #ff0080,
+      0 0 10px #ff0080,
+      0 0 20px #ff0080;
+  }
+
+  /* Flicker keyframes */
+  @keyframes flicker {
+    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+      opacity: 1;
       text-shadow:
         0 0 5px #ff0080,
         0 0 10px #ff0080,
         0 0 20px #ff0080,
         0 0 40px #ff0080;
-      animation: flicker 2s infinite alternate;
-      font-weight: 700;
-      z-index: 10;
     }
-    p {
-      color: #aaa;
-      font-size: 1.2em;
-      max-width: 600px;
-      z-index: 10;
+    20%, 22%, 24%, 55% {
+      opacity: 0.6;
+      text-shadow: none;
     }
-    .links {
-      margin-top: 2em;
-      display: flex;
-      flex-direction: column;
-      gap: 0.7em;
-      z-index: 10;
-    }
-    .links a, .glitch-link a {
-      position: relative;
-      text-decoration: none;
-      color: #00ffcc;
-      background: #111;
-      border: 1px solid #00ffcc88;
-      padding: 0.7em 1.2em;
-      border-radius: 6px;
-      transition: 0.3s ease;
-      font-weight: 600;
-      overflow: hidden;
-      z-index: 10;
-      display: inline-block;
-    }
-    /* Neon glow underline for links */
-    .links a::after, .glitch-link a::after {
-      content: '';
-      position: absolute;
-      width: 100%;
-      height: 2px;
-      background: #ff0080;
-      bottom: 0;
-      left: 0;
-      transform: scaleX(0);
-      transform-origin: right;
-      transition: transform 0.3s ease;
-      filter: drop-shadow(0 0 5px #ff0080);
-      z-index: 10;
-    }
-    .links a:hover::after, .glitch-link a:hover::after {
-      transform: scaleX(1);
-      transform-origin: left;
-    }
-    /* Flicker glitch effect */
-    @keyframes flicker {
-      0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
-        opacity: 1;
-        text-shadow:
-          0 0 5px #ff0080,
-          0 0 10px #ff0080,
-          0 0 20px #ff0080,
-          0 0 40px #ff0080;
-      }
-      20%, 22%, 24%, 55% {
-        opacity: 0.6;
-        text-shadow: none;
-      }
-    }
-    footer {
-      position: absolute;
-      bottom: 1em;
-      font-size: 0.8em;
-      color: #555;
-      z-index: 10;
-    }
+  }
 
-    /* Additional cyberpunk background flicker effect */
-    @keyframes backgroundFlicker {
-      0%, 100% { background-position: 0% 0%; }
-      50% { background-position: 100% 100%; }
-    }
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: radial-gradient(ellipse at center, #111 0%, #000 100%);
-      pointer-events: none;
-      animation: backgroundFlicker 15s linear infinite;
-      opacity: 0.12;
-      z-index: 1;
-    }
-  </style>
+  /* Links container */
+  .links {
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .links a {
+    color: #00ffcc;
+    text-decoration: none;
+    border: 1px solid #00ffcc88;
+    padding: 0.8em 1.5em;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    background: #111;
+    box-shadow: 0 0 10px #00ffcc44;
+    user-select: none;
+  }
+  .links a:hover {
+    box-shadow:
+      0 0 20px #ff0080,
+      0 0 30px #ff0080;
+    border-color: #ff0080;
+    color: #ff0080;
+  }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    font-size: 0.8rem;
+    color: #555;
+    margin: 5rem 0 2rem;
+    user-select: none;
+  }
+
+  /* Gradient fade top and bottom for scroll vibe */
+  body::after {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 4rem;
+    pointer-events: none;
+    background: linear-gradient(to bottom, #000 100%, transparent);
+    z-index: 20;
+  }
+  .fade-bottom {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    height: 4rem;
+    pointer-events: none;
+    background: linear-gradient(to top, #000 100%, transparent);
+    z-index: 20;
+  }
+
+</style>
 </head>
 <body>
-  <h1>Lynx</h1>
-  <p class="glitch-link">
-    <a href="https://github.com/RNClynx" target="_blank" class="glitch-link">Follow the trail</a>
-  </p>
-  <div class="links">
-    <a href="https://github.com/RNClynx" target="_blank">GitHub</a>
-    <a href="https://69lynx-com.l.ink/" target="_blank">Old L.ink Page</a>
-    <a href="mailto:69lynx@protonmail.com">Email Me</a>
+  <div class="container">
+    <h1>Lynx</h1>
+    <p class="follow-trail">
+      <a href="https://github.com/RNClynx" target="_blank">Follow the trail</a>
+    </p>
+    <div class="links">
+      <a href="https://github.com/RNClynx" target="_blank">GitHub</a>
+      <a href="https://69lynx-com.l.ink/" target="_blank">Old L.ink Page</a>
+      <a href="mailto:69lynx@protonmail.com">Email Me</a>
+    </div>
   </div>
+  <div class="fade-bottom"></div>
   <footer>© 2025 Lynx. No rights reserved.</footer>
 </body>
 </html>
