@@ -23,33 +23,29 @@
 
   /* Neon Grid Background */
   body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 150px; /* stop above black overlay */
+    background:
+      linear-gradient(to right, #0ff2 1px, transparent 1px),
+      linear-gradient(to bottom, #0ff2 1px, transparent 1px);
+    background-size: 50px 50px;
+    z-index: 0;
+    animation: gridShift 15s linear infinite;
+    pointer-events: none;
+  }
+  body::after {
     content: "";
     position: fixed;
     left: 0; right: 0; bottom: 0;
     height: 150px; /* height of the black overlay */
     background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
     pointer-events: none;
-    z-index: 10; /* on top of pink glow */
+    z-index: 6; /* below pink glow but above main content */
   }
-  body::after {
-    content: "";
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    box-shadow: 0 0 30px 5px #ff0080 inset;
-    pointer-events: none;
-    z-index: 5; /* behind black overlay */
-    opacity: 0.4;
-    animation: borderPulse 5s ease-in-out infinite;
-  }
-  @keyframes borderPulse {
-    0%, 100% {
-      opacity: 0.4;
-      box-shadow: 0 0 30px 5px #ff0080 inset;
-    }
-    50% {
-      opacity: 0.7;
-      box-shadow: 0 0 60px 12px #ff0080 inset;
-    }
+  @keyframes gridShift {
+    0% { background-position: 0 0, 0 0; }
+    100% { background-position: 50px 50px, 50px 50px; }
   }
 
   /* Main container */
@@ -59,7 +55,7 @@
     padding: 1rem 2rem;
     text-align: center;
     position: relative;
-    z-index: 20; /* above overlays */
+    z-index: 10;
   }
 
   /* Heading Lynx with pink glow and flicker */
@@ -97,6 +93,22 @@
       0 0 5px #ff0080,
       0 0 10px #ff0080,
       0 0 20px #ff0080;
+  }
+
+  /* Flicker keyframes */
+  @keyframes flicker {
+    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+      opacity: 1;
+      text-shadow:
+        0 0 5px #ff0080,
+        0 0 10px #ff0080,
+        0 0 20px #ff0080,
+        0 0 40px #ff0080;
+    }
+    20%, 22%, 24%, 55% {
+      opacity: 0.6;
+      text-shadow: none;
+    }
   }
 
   /* Links container */
@@ -137,7 +149,6 @@
     color: #ff77b0;
     font-size: 1.2rem;
     line-height: 1.5;
-    user-select: none;
   }
   .about-me h2 {
     font-family: 'Orbitron', sans-serif;
@@ -147,6 +158,37 @@
     text-shadow:
       0 0 5px #ff0080,
       0 0 10px #ff0080;
+    user-select: none;
+  }
+
+  /* Jiggle & emoji styles for About Me text */
+  .about-me p {
+    display: inline-block;
+    cursor: pointer;
+    position: relative;
+    user-select: none;
+  }
+  .about-me p:hover {
+    animation: jiggle 0.5s ease;
+  }
+  @keyframes jiggle {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-3px); }
+    50% { transform: translateX(3px); }
+    75% { transform: translateX(-3px); }
+  }
+  .emoji {
+    position: fixed;
+    pointer-events: none;
+    font-size: 1.5rem;
+    user-select: none;
+    animation: floatUp 1s forwards;
+    opacity: 1;
+    z-index: 15;
+  }
+  @keyframes floatUp {
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(-40px); opacity: 0; }
   }
 
   /* Project showcase */
@@ -213,12 +255,6 @@
     user-select: none;
   }
   
-  html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-  }
-
   /* Single big falling container covering entire width */
   #falling-container {
     position: fixed;
@@ -229,7 +265,6 @@
     z-index: 8;
     overflow: visible;
   }
-
   .falling-line {
     position: absolute;
     top: -20px;
@@ -242,7 +277,6 @@
     animation-name: fall;
     animation-iteration-count: infinite;
   }
-
   @keyframes fall {
     0% {
       transform: translateY(-30px);
@@ -264,98 +298,54 @@
     <div class="links">
       <a href="https://github.com/RNClynx" target="_blank" rel="noopener noreferrer">GitHub</a>
       <a href="https://www.roblox.com/users/690643432/profile" target="_blank" rel="noopener noreferrer">Roblox</a>
-      <a href="https://www.youtube.com/@69Lynx" target="_blank" rel="noopener noreferrer">Youtube</a>
+      <a href="https://www.youtube.com/@69Lynx" target="_blank" rel="noopener noreferrer">YouTube</a>
     </div>
 
-    <!-- About Me Section -->
     <section class="about-me">
       <h2>About Me</h2>
-      <p>im too silly</p>
+      <p id="silly-text">I'm too silly</p>
     </section>
 
-    <!-- Project Showcase Section -->
     <section class="projects">
-      <h2>Project Showcase</h2>
+      <h2>Projects</h2>
       <div class="project-grid">
         <div class="project-card">
-          <h3>69lynx Website</h3>
-          <p>my personal site, hosting all my links and projects.</p>
-          <a href="https://69lynx.com" target="_blank" rel="noopener noreferrer">Visit site</a>
+          <h3>Neon Grid Background</h3>
+          <p>A subtle animated neon grid to give cyberpunk vibes.</p>
+          <a href="#">Learn More</a>
         </div>
         <div class="project-card">
-          <h3>GitHub Repo</h3>
-          <p>the code behind my site, open for improvements.</p>
-          <a href="https://github.com/RNClynx/69lynx" target="_blank" rel="noopener noreferrer">View on GitHub</a>
+          <h3>Falling Lines Animation</h3>
+          <p>Vertical neon lines falling smoothly from top to bottom.</p>
+          <a href="#">Learn More</a>
         </div>
       </div>
     </section>
   </div>
 
-  <!-- Single big falling container -->
-  <div id="falling-container"></div>
-
 <script>
-  const fallingContainer = document.getElementById('falling-container');
-  const lynxHeader = document.getElementById('lynx-header');
+  // Emoji + jiggle hover effect on #silly-text
+  const sillyText = document.getElementById('silly-text');
 
-  const linesCount = 150;
-  const minDuration = 6;
-  const maxDuration = 12;
+  sillyText.addEventListener('mouseenter', (e) => {
+    // Jiggle is handled by CSS :hover animation
 
-  function randInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  }
+    // Create emoji element
+    const emoji = document.createElement('div');
+    emoji.textContent = '😂';
+    emoji.classList.add('emoji');
 
-  // Create falling lines all across the width, avoiding vertical zone of Lynx header
-  function createLines() {
-    fallingContainer.innerHTML = ''; // clear old
+    // Position emoji near cursor
+    emoji.style.left = e.clientX + 'px';
+    emoji.style.top = e.clientY + 'px';
 
-    // Get bounding box of Lynx header relative to viewport
-    const headerRect = lynxHeader.getBoundingClientRect();
+    document.body.appendChild(emoji);
 
-    // Define vertical exclusion zone for falling lines (px from top of viewport)
-    const excludeTop = headerRect.top;
-    const excludeBottom = headerRect.bottom;
-
-    const screenWidth = window.innerWidth;
-    const screenHeight = window.innerHeight;
-
-    for (let i = 0; i < linesCount; i++) {
-      const line = document.createElement('div');
-      line.classList.add('falling-line');
-
-      // Random horizontal position across the screen
-      const x = Math.random() * screenWidth;
-      line.style.left = x + 'px';
-
-      // Random animation duration and delay
-      const duration = randInt(minDuration * 1000, maxDuration * 1000) / 1000;
-      const delay = -Math.random() * duration;
-
-      line.style.animationDuration = duration + 's';
-      line.style.animationDelay = delay + 's';
-
-      // Choose vertical start position either above or below Lynx header zone
-      let topPos;
-      if (Math.random() < 0.5) {
-        // Above Lynx header top boundary
-        topPos = Math.random() * excludeTop;
-      } else {
-        // Below Lynx header bottom boundary down to bottom of viewport
-        topPos = excludeBottom + Math.random() * (screenHeight - excludeBottom);
-      }
-      line.style.top = topPos + 'px';
-
-      fallingContainer.appendChild(line);
-    }
-  }
-
-  // On resize, recalc lines
-  window.addEventListener('resize', () => {
-    createLines();
+    // Remove emoji after animation ends
+    emoji.addEventListener('animationend', () => {
+      emoji.remove();
+    });
   });
-
-  createLines();
 </script>
 </body>
 </html>
