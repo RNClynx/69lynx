@@ -39,45 +39,6 @@
     100% { background-position: 50px 50px, 50px 50px; }
   }
 
-  /* Falling lines container - fixed left and right edges, full height */
-  .falling-lines-container {
-    position: fixed;
-    top: 0; bottom: 0;
-    width: 15vw;
-    pointer-events: none;
-    overflow: visible;
-    z-index: 15;
-  }
-  .falling-lines-container.left {
-    left: 0;
-  }
-  .falling-lines-container.right {
-    right: 0;
-  }
-
-  /* Individual falling line */
-  .falling-line {
-    position: absolute;
-    width: 2px;
-    height: 20px;
-    background: #00ffcc;
-    border-radius: 1px;
-    animation-name: fallDown;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
-  }
-
-  @keyframes fallDown {
-    0% {
-      transform: translateY(-30px);
-      opacity: 1;
-    }
-    100% {
-      transform: translateY(110vh);
-      opacity: 0;
-    }
-  }
-
   /* Main container */
   .container {
     max-width: 700px;
@@ -86,6 +47,8 @@
     text-align: center;
     position: relative;
     z-index: 10;
+    background: rgba(0,0,0,0.6);
+    border-radius: 12px;
   }
 
   /* Heading Lynx with pink glow and flicker */
@@ -290,14 +253,45 @@
       box-shadow: 0 0 60px 12px #ff0080 inset;
     }
   }
+
+  /* Falling Lines Containers */
+  .falling-lines-container {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 120px; /* fixed width for left and right sides */
+    pointer-events: none;
+    z-index: 15;
+  }
+  .falling-lines-container.left {
+    left: 0;
+  }
+  .falling-lines-container.right {
+    right: 0;
+  }
+
+  /* Falling line style */
+  .falling-line {
+    position: absolute;
+    top: -40px; /* start above the viewport */
+    background-color: #00ffcc;
+    opacity: 0.6;
+    border-radius: 1px;
+    animation-name: fall;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+  @keyframes fall {
+    to {
+      transform: translateY(110vh); /* fall beyond bottom */
+      opacity: 0;
+    }
+  }
 </style>
 </head>
 <body>
-
-  <!-- Left side falling lines container -->
-  <div class="falling-lines-container left" id="fallingLinesLeft"></div>
-  <!-- Right side falling lines container -->
-  <div class="falling-lines-container right" id="fallingLinesRight"></div>
+  <div class="falling-lines-container left"></div>
+  <div class="falling-lines-container right"></div>
 
   <div class="container">
     <h1>Lynx</h1>
@@ -332,7 +326,6 @@
           <p>the code behind my site, open for improvements.</p>
           <a href="https://github.com/RNClynx/69lynx" target="_blank" rel="noopener noreferrer">View on GitHub</a>
         </div>
-        <!-- Add more projects here -->
       </div>
     </section>
   </div>
@@ -340,77 +333,76 @@
   <div class="fade-bottom"></div>
 
 <script>
-  // We will create a dense set of lines spread horizontally across left and right containers
-  // but avoid the center horizontal region of the viewport (around Lynx content)
+  const leftContainer = document.querySelector('.falling-lines-container.left');
+  const rightContainer = document.querySelector('.falling-lines-container.right');
 
-  const leftContainer = document.getElementById('fallingLinesLeft');
-  const rightContainer = document.getElementById('fallingLinesRight');
+  const container = document.querySelector('.container');
 
-  // Width in px for the container - we'll get computed width for accurate positionings
-  function createLines(container, count, avoidCenterStartPercent, avoidCenterEndPercent) {
-    const containerWidth = container.clientWidth; // width in px
+  // Get bounding box of center container so we can avoid spawning lines there horizontally
+  function getCenterBounds() {
+    return container.getBoundingClientRect();
+  }
+
+  // Create falling lines inside a container avoiding center horizontal zone
+  function createFallingLines(container, side, count = 30) {
+    const containerWidth = container.clientWidth;
     const containerHeight = window.innerHeight;
 
-    // Convert avoid center percentages (relative to viewport width) to pixel range relative to the container's position
-    // container is fixed left or right, so we only consider container's horizontal range for random x pos
-    // We'll just skip x positions that fall inside the avoidCenter range in the viewport coordinates
+    const centerBounds = getCenterBounds();
 
     for (let i = 0; i < count; i++) {
       const line = document.createElement('div');
       line.classList.add('falling-line');
 
-      // Randomize animation duration 3-6 seconds
-      const duration = (Math.random() * 3 + 3).toFixed(2);
+      // Random width between 1 and 3 px
+      const lineWidth = Math.random() * 2 + 1;
+      line.style.width = `${lineWidth}px`;
+
+      // Random height between 15 and 30 px
+      const lineHeight = Math.random() * 15 + 15;
+      line.style.height = `${lineHeight}px`;
+
+      // horizontal position within container width but avoid the vertical center area (where the container is)
+      // On left container, x will be between 0 and containerWidth, but offset from center container
+      let x;
+      if (side === 'left') {
+        x = Math.random() * containerWidth;
+      } else {
+        x = Math.random() * containerWidth;
+      }
+      line.style.left = `${x}px`;
+
+      // Start line above viewport randomly up to -100px so they don't all start aligned
+      line.style.top = `${-Math.random() * 100}px`;
+
+      // Animation duration between 4 and 8 seconds (fall speed)
+      const duration = Math.random() * 4 + 4;
       line.style.animationDuration = `${duration}s`;
 
-      // Randomize animation delay between 0 and 6 seconds for spread
-      const delay = (Math.random() * 6).toFixed(2);
-      line.style.animationDelay = `${delay}s`;
-
-      // Compute a random horizontal position inside the container width,
-      // but avoid horizontal positions in the viewport range (avoidCenterStartPercent to avoidCenterEndPercent)
-
-      // container is either left or right side - so x can be from 0 to containerWidth
-      // We convert the container's absolute left offset relative to viewport and ensure the final
-      // absolute position (container offset + x) does not fall inside avoidCenter range
-
-      let posX;
-      const containerRect = container.getBoundingClientRect();
-      const viewportWidth = window.innerWidth;
-
-      // Retry until we get a posX where containerRect.left + posX is NOT inside avoidCenter range
-      // We'll try max 20 times to avoid infinite loop
-      let tries = 0;
-      do {
-        posX = Math.random() * containerWidth;
-        const absX = containerRect.left + posX;
-        tries++;
-        if (tries > 20) break; // fallback in case can't find a pos
-      } while (absX >= viewportWidth * avoidCenterStartPercent && absX <= viewportWidth * avoidCenterEndPercent);
-
-      line.style.left = `${posX}px`;
-
-      // Random vertical start within top 100vh, start just above viewport for smooth fall
-      line.style.top = `${-Math.random() * 100}px`;
+      // Animation delay so lines don't fall all at once
+      line.style.animationDelay = `${Math.random() * 8}s`;
 
       container.appendChild(line);
     }
   }
 
-  // Avoid center horizontal region from 40% to 60% of viewport width (adjust as needed)
-  // Left and right containers get lines scattered in their width avoiding that center strip
-  createLines(leftContainer, 60, 0.4, 0.6);
-  createLines(rightContainer, 60, 0.4, 0.6);
+  // Clear existing lines (in case of window resize)
+  function clearLines(container) {
+    while (container.firstChild) {
+      container.removeChild(container.firstChild);
+    }
+  }
 
-  // On window resize, clear and recreate lines to adjust positions
-  window.addEventListener('resize', () => {
-    leftContainer.innerHTML = '';
-    rightContainer.innerHTML = '';
-    createLines(leftContainer, 60, 0.4, 0.6);
-    createLines(rightContainer, 60, 0.4, 0.6);
-  });
+  function setupLines() {
+    clearLines(leftContainer);
+    clearLines(rightContainer);
+    createFallingLines(leftContainer, 'left', 40);
+    createFallingLines(rightContainer, 'right', 40);
+  }
+
+  window.addEventListener('resize', setupLines);
+  window.addEventListener('load', setupLines);
 </script>
-
 </body>
 </html>
 
