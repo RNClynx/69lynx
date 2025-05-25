@@ -7,6 +7,7 @@
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=JetBrains+Mono&display=swap');
 
+  /* Reset */
   * {
     margin: 0; padding: 0; box-sizing: border-box;
   }
@@ -20,6 +21,7 @@
     position: relative;
   }
 
+  /* Neon Grid Background */
   body::before {
     content: '';
     position: fixed;
@@ -37,6 +39,7 @@
     100% { background-position: 50px 50px, 50px 50px; }
   }
 
+  /* Main container */
   .container {
     max-width: 700px;
     margin: 3rem auto 5rem;
@@ -44,10 +47,9 @@
     text-align: center;
     position: relative;
     z-index: 10;
-    background: rgba(0,0,0,0.6);
-    border-radius: 12px;
   }
 
+  /* Heading Lynx with pink glow and flicker */
   h1 {
     font-family: 'Orbitron', sans-serif;
     font-size: 5rem;
@@ -62,6 +64,7 @@
     user-select: none;
   }
 
+  /* Follow the trail link styling */
   .follow-trail a {
     font-family: 'JetBrains Mono', monospace;
     color: #ff0080;
@@ -83,6 +86,7 @@
       0 0 20px #ff0080;
   }
 
+  /* Flicker keyframes */
   @keyframes flicker {
     0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
       opacity: 1;
@@ -98,6 +102,7 @@
     }
   }
 
+  /* Links container */
   .links {
     margin-top: 3rem;
     display: flex;
@@ -124,6 +129,7 @@
     color: #ff0080;
   }
 
+  /* About Me section */
   .about-me {
     margin-top: 4rem;
     background: #111;
@@ -146,6 +152,7 @@
       0 0 10px #ff0080;
   }
 
+  /* Project showcase */
   .projects {
     margin-top: 4rem;
     text-align: left;
@@ -200,6 +207,7 @@
     text-decoration: underline;
   }
 
+  /* Footer */
   footer {
     text-align: center;
     font-size: 0.8rem;
@@ -216,13 +224,13 @@
     z-index: 20;
   }
 
-  html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-  }
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
 
-  body::after {
+body::after {
     content: "";
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
@@ -244,43 +252,57 @@
     }
   }
 
-  /* Falling Lines Containers */
-  .falling-lines-container {
+  /* Falling lines styles and container */
+  #falling-container {
     position: fixed;
-    top: 0;
-    bottom: 0;
+    top: 0; left: 0; width: 100%; height: 100vh;
     pointer-events: none;
-    z-index: 15;
-  }
-  .falling-lines-container.left {
-    left: 0;
-    width: 480px;
-  }
-  .falling-lines-container.right {
-    right: 0;
-    width: 480px;
-  }
-  .falling-lines-container.top-middle {
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    height: 200px; /* only top area */
-    width: 700px;
+    z-index: 8;
+    overflow: visible;
   }
 
-  /* Falling line style */
+  .falling-area {
+    position: fixed;
+    top: 0;
+    height: 100vh;
+    overflow: visible;
+  }
+
+  #left-fall {
+    left: 0;
+    width: 600px;
+  }
+
+  #right-fall {
+    right: 0;
+    width: 600px;
+  }
+
+  #middle-fall {
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+  }
+
   .falling-line {
     position: absolute;
-    top: -40px; /* start above the viewport */
-    background-color: #00ffcc;
-    opacity: 0.6;
+    top: -20px;
+    width: 2px;
+    height: 25px;
+    background: #00ffcc;
+    opacity: 0.8;
     border-radius: 1px;
-    animation-name: fall;
     animation-timing-function: linear;
+    animation-name: fall;
     animation-iteration-count: infinite;
   }
+
   @keyframes fall {
-    to {
+    0% {
+      transform: translateY(-30px);
+      opacity: 0.8;
+    }
+    100% {
       transform: translateY(110vh);
       opacity: 0;
     }
@@ -288,12 +310,8 @@
 </style>
 </head>
 <body>
-  <div class="falling-lines-container left"></div>
-  <div class="falling-lines-container right"></div>
-  <div class="falling-lines-container top-middle"></div>
-
   <div class="container">
-    <h1>Lynx</h1>
+    <h1 id="lynx-header">Lynx</h1>
     <p class="follow-trail">
       <a href="https://discord.gg/fDVUvm8C" target="_blank" rel="noopener noreferrer">Follow the trail</a>
     </p>
@@ -303,13 +321,13 @@
       <a href="https://www.youtube.com/@69Lynx" target="_blank" rel="noopener noreferrer">Youtube</a>
     </div>
 
+    <!-- About Me Section -->
     <section class="about-me">
       <h2>About Me</h2>
-      <p>
-         im too silly 
-      </p>
+      <p>im too silly</p>
     </section>
 
+    <!-- Project Showcase Section -->
     <section class="projects">
       <h2>Project Showcase</h2>
       <div class="project-grid">
@@ -329,100 +347,105 @@
 
   <div class="fade-bottom"></div>
 
-<script>
-  const leftContainer = document.querySelector('.falling-lines-container.left');
-  const rightContainer = document.querySelector('.falling-lines-container.right');
-  const topMiddleContainer = document.querySelector('.falling-lines-container.top-middle');
-  const container = document.querySelector('.container');
+  <!-- Falling lines container -->
+  <div id="falling-container">
+    <div id="left-fall" class="falling-area"></div>
+    <div id="middle-fall" class="falling-area"></div>
+    <div id="right-fall" class="falling-area"></div>
+  </div>
 
-  function getCenterBounds() {
-    return container.getBoundingClientRect();
+<script>
+  const leftFall = document.getElementById('left-fall');
+  const rightFall = document.getElementById('right-fall');
+  const middleFall = document.getElementById('middle-fall');
+  const lynxHeader = document.getElementById('lynx-header');
+
+  // Config for falling lines
+  const linesCount = 70;
+  const minDuration = 6; // seconds
+  const maxDuration = 12;
+
+  // Helper to generate random integer between min and max inclusive
+  function randInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
-  // Create falling lines inside a container avoiding center horizontal zone if specified
-  function createFallingLines(container, options) {
-    const {
-      count = 40,
-      avoidCenter = false,
-      verticalLimit = null,
-      horizontalPadding = 20
-    } = options || {};
-
-    const containerWidth = container.clientWidth;
-    const containerHeight = verticalLimit || window.innerHeight;
-
-    const centerBounds = getCenterBounds();
-
-    for (let i = 0; i < count; i++) {
+  // Create lines in a given container with given width
+  function createLines(container, containerWidth, excludeTopStart, excludeTopEnd) {
+    for (let i = 0; i < linesCount; i++) {
       const line = document.createElement('div');
       line.classList.add('falling-line');
 
-      const lineWidth = Math.random() * 2 + 1;
-      line.style.width = `${lineWidth}px`;
+      // Position line horizontally randomly within container width
+      const x = Math.random() * containerWidth;
+      line.style.left = x + 'px';
 
-      const lineHeight = Math.random() * 15 + 15;
-      line.style.height = `${lineHeight}px`;
+      // Random animation duration and delay for varied effect
+      const duration = randInt(minDuration * 1000, maxDuration * 1000) / 1000;
+      const delay = -Math.random() * duration;
 
-      let x;
+      line.style.animationDuration = duration + 's';
+      line.style.animationDelay = delay + 's';
 
-      if (avoidCenter) {
-        // Choose x outside centerBounds horizontally with some padding
-        const centerLeftInContainer = centerBounds.left - container.getBoundingClientRect().left;
-        const centerRightInContainer = centerBounds.right - container.getBoundingClientRect().left;
+      // Position vertically, but avoid falling lines inside Lynx header for middle container
+      if (excludeTopStart !== undefined && excludeTopEnd !== undefined && container === middleFall) {
+        // Calculate vertical start point for lines, avoiding header area
+        // We'll position lines randomly either above or below Lynx's vertical space
 
-        // We'll divide the container horizontally into two safe zones:
-        // left zone: 0 to centerLeftInContainer - padding
-        // right zone: centerRightInContainer + padding to containerWidth
+        // Lynx header bounding box
+        const headerRect = lynxHeader.getBoundingClientRect();
 
-        // Randomly pick left or right side
+        // Let's define a vertical exclusion zone in px (relative to viewport top)
+        const excludeStart = excludeTopStart; // e.g. 120
+        const excludeEnd = excludeTopEnd; // e.g. 250
+
+        // Randomly pick vertical position either above excludeStart or below excludeEnd
+        const fallHeight = window.innerHeight;
+
+        let topPos;
+
         if (Math.random() < 0.5) {
-          // left side range
-          x = Math.random() * Math.max(0, centerLeftInContainer - horizontalPadding);
+          // Start above exclusion zone
+          topPos = Math.random() * excludeStart;
         } else {
-          // right side range
-          x = Math.random() * Math.max(0, containerWidth - (centerRightInContainer + horizontalPadding)) + (centerRightInContainer + horizontalPadding);
+          // Start below exclusion zone down to bottom
+          topPos = excludeEnd + Math.random() * (fallHeight - excludeEnd);
         }
+        line.style.top = topPos + 'px';
       } else {
-        x = Math.random() * containerWidth;
+        // Default start at top -20px for left and right fall
+        line.style.top = (-20) + 'px';
       }
-
-      line.style.left = `${x}px`;
-
-      // Start above viewport, randomized so they don't all fall aligned
-      line.style.top = `${-Math.random() * 100}px`;
-
-      // Animation duration between 4 and 8 seconds
-      const duration = Math.random() * 4 + 4;
-      line.style.animationDuration = `${duration}s`;
-
-      // Animation delay randomized up to 8 seconds
-      line.style.animationDelay = `${Math.random() * 8}s`;
 
       container.appendChild(line);
     }
   }
 
-  function clearLines(container) {
-    while (container.firstChild) {
-      container.removeChild(container.firstChild);
-    }
+  // Clear old lines if any
+  function clearLines() {
+    [leftFall, rightFall, middleFall].forEach(container => {
+      while (container.firstChild) {
+        container.removeChild(container.firstChild);
+      }
+    });
   }
 
-  function setupLines() {
-    clearLines(leftContainer);
-    clearLines(rightContainer);
-    clearLines(topMiddleContainer);
-
-    // Left and right cover sides fully, no center avoidance needed there since container is centered and these are on edges
-    createFallingLines(leftContainer, { count: 50 });
-    createFallingLines(rightContainer, { count: 50 });
-
-    // Top-middle: avoid center horizontal container, only top 200px height
-    createFallingLines(topMiddleContainer, { count: 50, avoidCenter: true, verticalLimit: 200, horizontalPadding: 40 });
+  // Initial create lines
+  function initLines() {
+    clearLines();
+    createLines(leftFall, 600);
+    createLines(rightFall, 600);
+    // For middle, exclude Lynx header area roughly from 120 to 250px viewport height
+    createLines(middleFall, 200, 120, 250);
   }
 
-  window.addEventListener('resize', setupLines);
-  window.addEventListener('load', setupLines);
+  // Recreate lines on resize to reposition correctly
+  window.addEventListener('resize', () => {
+    initLines();
+  });
+
+  // Start
+  initLines();
 </script>
 </body>
 </html>
