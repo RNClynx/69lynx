@@ -81,6 +81,38 @@
     z-index: 5;
   }
 
+  /* Pink overlay border (top + sides only, no bottom) */
+  .pink-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 20px;
+    pointer-events: none;
+    z-index: 6;
+    background: rgba(255, 0, 128, 0.25);
+    box-shadow:
+      0 4px 20px rgba(255, 0, 128, 0.35),
+      inset 0 0 15px rgba(255, 0, 128, 0.3);
+  }
+  .pink-overlay::before,
+  .pink-overlay::after {
+    content: "";
+    position: fixed;
+    top: 20px; /* just below top bar */
+    width: 20px; height: calc(100% - 20px);
+    pointer-events: none;
+    z-index: 6;
+    background: rgba(255, 0, 128, 0.25);
+    box-shadow:
+      4px 0 20px rgba(255, 0, 128, 0.35),
+      inset 0 0 15px rgba(255, 0, 128, 0.3);
+  }
+  .pink-overlay::before {
+    left: 0;
+  }
+  .pink-overlay::after {
+    right: 0;
+  }
+
   /* Main container */
   .container {
     max-width: 700px;
@@ -313,6 +345,7 @@
 <body>
 
 <div id="falling-lines"></div>
+<div class="pink-overlay"></div>
 
 <div class="container">
   <h1 id="lynx-header">Lynx</h1>
@@ -320,9 +353,9 @@
     <a href="https://discord.gg/fDVUvm8C" target="_blank" rel="noopener noreferrer">Follow the trail</a>
   </p>
   <div class="links">
-    <a href="https://github.com/RNClynx" target="_blank" rel="noopener noreferrer">GitHub</a>
-    <a href="https://www.roblox.com/users/690643432/profile" target="_blank" rel="noopener noreferrer">Roblox</a>
-    <a href="https://www.youtube.com/@69Lynx" target="_blank" rel="noopener noreferrer">YouTube</a>
+    <a href="https://github.com/RNC3" target="_blank" rel="noopener noreferrer">GitHub</a>
+    <a href="https://linkedin.com/in/rnc3" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+    <a href="https://twitter.com/RNC3_" target="_blank" rel="noopener noreferrer">Twitter</a>
   </div>
 
   <section class="about-me">
@@ -334,59 +367,65 @@
     <h2>Projects</h2>
     <div class="project-grid">
       <div class="project-card">
-        <h3>Neon Grid Background</h3>
-        <p>A subtle animated neon grid to give cyberpunk vibes.</p>
+        <h3>Project One</h3>
+        <p>A cool project demonstrating awesome tech.</p>
         <a href="#">Learn More</a>
       </div>
       <div class="project-card">
-        <h3>Falling Lines Animation</h3>
-        <p>Vertical neon lines falling smoothly from top to bottom.</p>
+        <h3>Project Two</h3>
+        <p>Another project with slick design and features.</p>
         <a href="#">Learn More</a>
       </div>
     </div>
   </section>
 </div>
 
+<footer>© 2025 Lynx. All rights reserved.</footer>
+
 <script>
-  // Create falling lines
-  const linesCount = 30;
+  // Generate falling lines
   const container = document.getElementById('falling-lines');
-  for(let i = 0; i < linesCount; i++) {
+  const numberOfLines = 40;
+
+  for(let i = 0; i < numberOfLines; i++) {
     const line = document.createElement('div');
     line.classList.add('line');
-    line.style.left = (Math.random() * 100) + 'vw';
-    line.style.animationDuration = (5 + Math.random() * 5) + 's';
-    line.style.animationDelay = (Math.random() * 10) + 's';
-    line.style.height = (50 + Math.random() * 100) + 'px';
+    line.style.left = `${Math.random() * 100}vw`;
+    line.style.animationDuration = `${5 + Math.random() * 10}s`;
+    line.style.animationDelay = `${Math.random() * 20}s`;
     container.appendChild(line);
   }
 
-  // Wrap each letter in #silly-text with a span for individual animation
-  const sillyText = document.getElementById('silly-text');
-  const text = "I'm too silly";
-  sillyText.innerHTML = '';
+  // Silly Text with letter-by-letter span wrap
+  const sillyText = "I’m a code wizard 🧙‍♂️ making magic with JavaScript, CSS, and neon vibes. Hover me!";
+  const sillyTextContainer = document.getElementById('silly-text');
 
-  for (let i = 0; i < text.length; i++) {
-    const char = text[i];
-    const span = document.createElement('span');
-    span.textContent = char;
-    sillyText.appendChild(span);
+  function createSpans(text) {
+    return text.split('').map((char, i) => {
+      const span = document.createElement('span');
+      span.textContent = char;
+      return span;
+    });
   }
 
-  // Emoji + floating effect on hover at cursor
-  sillyText.addEventListener('mouseenter', (e) => {
-    const emoji = document.createElement('div');
-    emoji.textContent = '😂';
-    emoji.classList.add('emoji');
-    emoji.style.left = e.clientX + 'px';
-    emoji.style.top = e.clientY + 'px';
+  const spans = createSpans(sillyText);
+  spans.forEach(span => sillyTextContainer.appendChild(span));
 
+  // Emoji hover pop effect
+  sillyTextContainer.addEventListener('mousemove', e => {
+    const emoji = document.createElement('div');
+    emoji.classList.add('emoji');
+    emoji.textContent = '✨';
+    emoji.style.left = `${e.pageX}px`;
+    emoji.style.top = `${e.pageY}px`;
     document.body.appendChild(emoji);
 
-    emoji.addEventListener('animationend', () => {
-      emoji.remove();
-    });
+    setTimeout(() => {
+      emoji.style.opacity = '0';
+      setTimeout(() => emoji.remove(), 1000);
+    }, 200);
   });
 </script>
+
 </body>
 </html>
