@@ -23,20 +23,33 @@
 
   /* Neon Grid Background */
   body::before {
-    content: '';
+    content: "";
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    height: 150px; /* height of the black overlay */
+    background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+    pointer-events: none;
+    z-index: 10; /* on top of pink glow */
+  }
+  body::after {
+    content: "";
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
-    background:
-      linear-gradient(to right, #0ff2 1px, transparent 1px),
-      linear-gradient(to bottom, #0ff2 1px, transparent 1px);
-    background-size: 50px 50px;
-    z-index: 0;
-    animation: gridShift 15s linear infinite;
+    box-shadow: 0 0 30px 5px #ff0080 inset;
     pointer-events: none;
+    z-index: 5; /* behind black overlay */
+    opacity: 0.4;
+    animation: borderPulse 5s ease-in-out infinite;
   }
-  @keyframes gridShift {
-    0% { background-position: 0 0, 0 0; }
-    100% { background-position: 50px 50px, 50px 50px; }
+  @keyframes borderPulse {
+    0%, 100% {
+      opacity: 0.4;
+      box-shadow: 0 0 30px 5px #ff0080 inset;
+    }
+    50% {
+      opacity: 0.7;
+      box-shadow: 0 0 60px 12px #ff0080 inset;
+    }
   }
 
   /* Main container */
@@ -46,7 +59,7 @@
     padding: 1rem 2rem;
     text-align: center;
     position: relative;
-    z-index: 10;
+    z-index: 20; /* above overlays */
   }
 
   /* Heading Lynx with pink glow and flicker */
@@ -84,22 +97,6 @@
       0 0 5px #ff0080,
       0 0 10px #ff0080,
       0 0 20px #ff0080;
-  }
-
-  /* Flicker keyframes */
-  @keyframes flicker {
-    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
-      opacity: 1;
-      text-shadow:
-        0 0 5px #ff0080,
-        0 0 10px #ff0080,
-        0 0 20px #ff0080,
-        0 0 40px #ff0080;
-    }
-    20%, 22%, 24%, 55% {
-      opacity: 0.6;
-      text-shadow: none;
-    }
   }
 
   /* Links container */
@@ -216,32 +213,10 @@
     user-select: none;
   }
   
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}
-
-body::after {
-    content: "";
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    box-shadow: 0 0 30px 5px #ff0080 inset;
-    pointer-events: none;
-    z-index: 5;
-    opacity: 0.4;
-    animation: borderPulse 5s ease-in-out infinite;
-  }
-
-  @keyframes borderPulse {
-    0%, 100% {
-      opacity: 0.4;
-      box-shadow: 0 0 30px 5px #ff0080 inset;
-    }
-    50% {
-      opacity: 0.7;
-      box-shadow: 0 0 60px 12px #ff0080 inset;
-    }
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
   }
 
   /* Single big falling container covering entire width */
