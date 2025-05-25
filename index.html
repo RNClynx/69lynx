@@ -41,7 +41,7 @@
 
   /* Main container */
   .container {
-    max-width: 600px;
+    max-width: 700px;
     margin: 3rem auto 5rem;
     padding: 1rem 2rem;
     text-align: center;
@@ -129,6 +129,84 @@
     color: #ff0080;
   }
 
+  /* About Me section */
+  .about-me {
+    margin-top: 4rem;
+    background: #111;
+    padding: 1.5rem 2rem;
+    border-radius: 12px;
+    box-shadow:
+      0 0 10px #ff008044;
+    color: #ff77b0;
+    font-size: 1.2rem;
+    line-height: 1.5;
+    user-select: none;
+  }
+  .about-me h2 {
+    font-family: 'Orbitron', sans-serif;
+    color: #ff0080;
+    margin-bottom: 1rem;
+    font-size: 2rem;
+    text-shadow:
+      0 0 5px #ff0080,
+      0 0 10px #ff0080;
+  }
+
+  /* Project showcase */
+  .projects {
+    margin-top: 4rem;
+    text-align: left;
+  }
+  .projects h2 {
+    font-family: 'Orbitron', sans-serif;
+    color: #ff0080;
+    margin-bottom: 1rem;
+    font-size: 2rem;
+    text-shadow:
+      0 0 5px #ff0080,
+      0 0 10px #ff0080;
+    user-select: none;
+  }
+  .project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+    gap: 1.5rem;
+  }
+  .project-card {
+    background: #111;
+    border-radius: 12px;
+    padding: 1.2rem;
+    box-shadow:
+      0 0 10px #00ffcc44;
+    transition: box-shadow 0.3s ease;
+  }
+  .project-card:hover {
+    box-shadow:
+      0 0 15px #ff0080,
+      0 0 25px #ff0080;
+  }
+  .project-card h3 {
+    margin-bottom: 0.5rem;
+    color: #ff0080;
+    font-family: 'Orbitron', sans-serif;
+  }
+  .project-card p {
+    color: #00ffcc;
+    font-size: 1rem;
+    line-height: 1.3;
+  }
+  .project-card a {
+    color: #ff0080;
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-block;
+    margin-top: 0.8rem;
+    user-select: none;
+  }
+  .project-card a:hover {
+    text-decoration: underline;
+  }
+
   /* Footer */
   footer {
     text-align: center;
@@ -170,9 +248,35 @@
       <a href="https://www.roblox.com/users/690643432/profile" target="_blank" rel="noopener noreferrer">Roblox</a>
       <a href="https://www.youtube.com/@69Lynx" target="_blank" rel="noopener noreferrer">Youtube</a>
     </div>
+
+    <!-- About Me Section -->
+    <section class="about-me">
+      <h2>About Me</h2>
+      <p>
+        Hey! I'm Lynx — a cyberpunk enthusiast, coder, and digital trailblazer. I love crafting neon-lit web experiences and exploring the glitchy edge of the internet.
+        Welcome to my neon grid world!
+      </p>
+    </section>
+
+    <!-- Project Showcase Section -->
+    <section class="projects">
+      <h2>Project Showcase</h2>
+      <div class="project-grid">
+        <div class="project-card">
+          <h3>69lynx Website</h3>
+          <p>My personal cyberpunk-themed site, hosting all my links and projects.</p>
+          <a href="https://69lynx.com" target="_blank" rel="noopener noreferrer">Visit site</a>
+        </div>
+        <div class="project-card">
+          <h3>GitHub Repo</h3>
+          <p>The code behind my site, open for collaboration and improvements.</p>
+          <a href="https://github.com/RNClynx/69lynx" target="_blank" rel="noopener noreferrer">View on GitHub</a>
+        </div>
+        <!-- Add more projects here -->
+      </div>
+    </section>
   </div>
+
   <div class="fade-bottom"></div>
-  <footer>© 2025 Lynx. No rights reserved.</footer>
 </body>
 </html>
-
