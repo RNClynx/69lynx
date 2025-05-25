@@ -274,4 +274,84 @@
   .fade-bottom {
     position: fixed;
     bottom: 0; left: 0; right: 0;
-    height: 
+    height: 4rem;
+    pointer-events: none;
+    background: linear-gradient(to top, #000 100%, transparent);
+    z-index: 20;
+  }
+</style>
+</head>
+<body>
+
+<!-- Falling teal lines fixed at top -->
+<div class="falling-lines">
+  <div class="falling-line"></div>
+  <div class="falling-line"></div>
+  <div class="falling-line"></div>
+  <div class="falling-line"></div>
+  <div class="falling-line"></div>
+  <div class="falling-line"></div>
+  <div class="falling-line"></div>
+  <div class="falling-line"></div>
+  <div class="falling-line"></div>
+  <div class="falling-line"></div>
+  <div class="falling-line"></div>
+  <div class="falling-line"></div>
+  <div class="falling-line"></div>
+  <div class="falling-line"></div>
+  <div class="falling-line"></div>
+  <div class="falling-line"></div>
+  <div class="falling-line"></div>
+  <div class="falling-line"></div>
+  <div class="falling-line"></div>
+  <div class="falling-line"></div>
+</div>
+
+<div class="container">
+  <h1>Lynx</h1>
+  <div class="follow-trail"><a href="#projects">Follow the Trail →</a></div>
+
+  <section class="about-me">
+    <h2>About Me</h2>
+    <p>Welcome to my little corner of the internet.</p>
+  </section>
+
+  <section id="projects" class="projects">
+    <h2>Projects</h2>
+    <div class="project-grid">
+      <div class="project-card">
+        <h3>Neon Grid Background</h3>
+        <p>A continuously shifting neon grid animation background that sets the cyberpunk mood.</p>
+        <a href="#">View Code</a>
+      </div>
+      <div class="project-card">
+        <h3>Flickering Text Animation</h3>
+        <p>Glowing text with subtle flicker effects to mimic neon signs.</p>
+        <a href="#">View Code</a>
+      </div>
+      <div class="project-card">
+        <h3>Falling Lines Effect</h3>
+        <p>Animated teal vertical lines falling fixed at the top, fading away as you scroll.</p>
+        <a href="#">View Code</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="fade-bottom"></div>
+
+<footer>© 2025 Lynx. All rights reserved.</footer>
+
+<script>
+  const lines = document.querySelector('.falling-lines');
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    const maxScroll = 300;
+    let newHeight = Math.max(150 - (scrollY / maxScroll) * 150, 0);
+    lines.style.height = newHeight + 'px';
+  });
+</script>
+
+</body>
+</html>
+
