@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
@@ -254,7 +254,7 @@
     margin: 5rem 0 2rem;
     user-select: none;
   }
-  
+
   /* Single big falling container covering entire width */
   #falling-container {
     position: fixed;
@@ -268,13 +268,12 @@
   .falling-line {
     position: absolute;
     top: -20px;
-    width: 2px;
     height: 25px;
     background: #00ffcc;
     opacity: 0.8;
     border-radius: 1px;
-    animation-timing-function: linear;
     animation-name: fall;
+    animation-timing-function: linear;
     animation-iteration-count: infinite;
   }
   @keyframes fall {
@@ -323,6 +322,8 @@
     </section>
   </div>
 
+  <div id="falling-container"></div>
+
 <script>
   // Emoji + jiggle hover effect on #silly-text
   const sillyText = document.getElementById('silly-text');
@@ -346,6 +347,29 @@
       emoji.remove();
     });
   });
+
+  // Falling lines setup
+  const container = document.getElementById('falling-container');
+  const linesCount = 60;  // Number of falling lines
+
+  for (let i = 0; i < linesCount; i++) {
+    const line = document.createElement('div');
+    line.classList.add('falling-line');
+
+    // Random horizontal position across the viewport width
+    line.style.left = Math.random() * 100 + 'vw';
+
+    // Random animation duration between 3s and 8s
+    line.style.animationDuration = (3 + Math.random() * 5) + 's';
+
+    // Random animation delay so they don't fall all together
+    line.style.animationDelay = (Math.random() * 8) + 's';
+
+    // Optional: random width for variation (1px - 3px)
+    line.style.width = (1 + Math.random() * 2) + 'px';
+
+    container.appendChild(line);
+  }
 </script>
 </body>
 </html>
