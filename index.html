@@ -252,36 +252,15 @@ body::after {
     }
   }
 
-  /* Falling lines styles and container */
+  /* Single big falling container covering entire width */
   #falling-container {
     position: fixed;
-    top: 0; left: 0; width: 100%; height: 100vh;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100vh;
     pointer-events: none;
     z-index: 8;
     overflow: visible;
-  }
-
-  .falling-area {
-    position: fixed;
-    top: 0;
-    height: 100vh;
-    overflow: visible;
-  }
-
-  #left-fall {
-    left: 0;
-    width: 600px;
-  }
-
-  #right-fall {
-    right: 0;
-    width: 600px;
-  }
-
-  #middle-fall {
-    left: 50%;
-    transform: translateX(-50%);
-    width: 200px;
   }
 
   .falling-line {
@@ -347,105 +326,71 @@ body::after {
 
   <div class="fade-bottom"></div>
 
-  <!-- Falling lines container -->
-  <div id="falling-container">
-    <div id="left-fall" class="falling-area"></div>
-    <div id="middle-fall" class="falling-area"></div>
-    <div id="right-fall" class="falling-area"></div>
-  </div>
+  <!-- Single big falling container -->
+  <div id="falling-container"></div>
 
 <script>
-  const leftFall = document.getElementById('left-fall');
-  const rightFall = document.getElementById('right-fall');
-  const middleFall = document.getElementById('middle-fall');
+  const fallingContainer = document.getElementById('falling-container');
   const lynxHeader = document.getElementById('lynx-header');
 
-  // Config for falling lines
-  const linesCount = 70;
-  const minDuration = 6; // seconds
+  const linesCount = 150;
+  const minDuration = 6;
   const maxDuration = 12;
 
-  // Helper to generate random integer between min and max inclusive
   function randInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
-  // Create lines in a given container with given width
-  function createLines(container, containerWidth, excludeTopStart, excludeTopEnd) {
+  // Create falling lines all across the width, avoiding vertical zone of Lynx header
+  function createLines() {
+    fallingContainer.innerHTML = ''; // clear old
+
+    // Get bounding box of Lynx header relative to viewport
+    const headerRect = lynxHeader.getBoundingClientRect();
+
+    // Define vertical exclusion zone for falling lines (px from top of viewport)
+    const excludeTop = headerRect.top;
+    const excludeBottom = headerRect.bottom;
+
+    const screenWidth = window.innerWidth;
+    const screenHeight = window.innerHeight;
+
     for (let i = 0; i < linesCount; i++) {
       const line = document.createElement('div');
       line.classList.add('falling-line');
 
-      // Position line horizontally randomly within container width
-      const x = Math.random() * containerWidth;
+      // Random horizontal position across the screen
+      const x = Math.random() * screenWidth;
       line.style.left = x + 'px';
 
-      // Random animation duration and delay for varied effect
+      // Random animation duration and delay
       const duration = randInt(minDuration * 1000, maxDuration * 1000) / 1000;
       const delay = -Math.random() * duration;
 
       line.style.animationDuration = duration + 's';
       line.style.animationDelay = delay + 's';
 
-      // Position vertically, but avoid falling lines inside Lynx header for middle container
-      if (excludeTopStart !== undefined && excludeTopEnd !== undefined && container === middleFall) {
-        // Calculate vertical start point for lines, avoiding header area
-        // We'll position lines randomly either above or below Lynx's vertical space
-
-        // Lynx header bounding box
-        const headerRect = lynxHeader.getBoundingClientRect();
-
-        // Let's define a vertical exclusion zone in px (relative to viewport top)
-        const excludeStart = excludeTopStart; // e.g. 120
-        const excludeEnd = excludeTopEnd; // e.g. 250
-
-        // Randomly pick vertical position either above excludeStart or below excludeEnd
-        const fallHeight = window.innerHeight;
-
-        let topPos;
-
-        if (Math.random() < 0.5) {
-          // Start above exclusion zone
-          topPos = Math.random() * excludeStart;
-        } else {
-          // Start below exclusion zone down to bottom
-          topPos = excludeEnd + Math.random() * (fallHeight - excludeEnd);
-        }
-        line.style.top = topPos + 'px';
+      // Choose vertical start position either above or below Lynx header zone
+      let topPos;
+      if (Math.random() < 0.5) {
+        // Above Lynx header top boundary
+        topPos = Math.random() * excludeTop;
       } else {
-        // Default start at top -20px for left and right fall
-        line.style.top = (-20) + 'px';
+        // Below Lynx header bottom boundary down to bottom of viewport
+        topPos = excludeBottom + Math.random() * (screenHeight - excludeBottom);
       }
+      line.style.top = topPos + 'px';
 
-      container.appendChild(line);
+      fallingContainer.appendChild(line);
     }
   }
 
-  // Clear old lines if any
-  function clearLines() {
-    [leftFall, rightFall, middleFall].forEach(container => {
-      while (container.firstChild) {
-        container.removeChild(container.firstChild);
-      }
-    });
-  }
-
-  // Initial create lines
-  function initLines() {
-    clearLines();
-    createLines(leftFall, 600);
-    createLines(rightFall, 600);
-    // For middle, exclude Lynx header area roughly from 120 to 250px viewport height
-    createLines(middleFall, 200, 120, 250);
-  }
-
-  // Recreate lines on resize to reposition correctly
+  // On resize, recalc lines
   window.addEventListener('resize', () => {
-    initLines();
+    createLines();
   });
 
-  // Start
-  initLines();
+  createLines();
 </script>
 </body>
 </html>
