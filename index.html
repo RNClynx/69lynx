@@ -10,7 +10,7 @@
     * {
       margin: 0; padding: 0; box-sizing: border-box;
     }
-    body, html {
+    html, body {
       height: 100%;
       font-family: 'JetBrains Mono', monospace;
       background: #000;
@@ -20,11 +20,10 @@
       position: relative;
     }
 
-    /* Neon Grid Background */
     body::before {
       content: '';
       position: fixed;
-      top: 0; left: 0; right: 0; bottom: 150px;
+      top: 0; left: 0; right: 0; bottom: 0;
       background:
         linear-gradient(to right, #0ff2 1px, transparent 1px),
         linear-gradient(to bottom, #0ff2 1px, transparent 1px);
@@ -33,37 +32,20 @@
       animation: gridShift 15s linear infinite;
       pointer-events: none;
     }
-    body::after {
-      content: "";
-      position: fixed;
-      left: 0; right: 0; bottom: 0;
-      height: 150px;
-      background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
-      pointer-events: none;
-      z-index: 6;
-    }
 
     @keyframes gridShift {
       0% { background-position: 0 0, 0 0; }
       100% { background-position: 50px 50px, 50px 50px; }
     }
 
-    /* ✨ Pink Border Glow Layer */
     #pink-border-glow {
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 150px;
+      top: 0; left: 0; right: 0; bottom: 0;
       pointer-events: none;
       z-index: 7;
-      box-shadow:
-        inset 0 8px 20px #ff0080,
-        inset 8px 0 20px #ff0080,
-        inset -8px 0 20px #ff0080;
+      box-shadow: inset 0 0 40px #ff0080;
     }
 
-    /* Everything else is unchanged... */
     .container {
       max-width: 700px;
       margin: 3rem auto 5rem;
@@ -99,7 +81,6 @@
       display: inline-block;
       user-select: none;
     }
-
     .follow-trail a:hover,
     .follow-trail a:focus {
       border-color: #ff0080;
@@ -155,24 +136,19 @@
       background: #111;
       padding: 1.5rem 2rem;
       border-radius: 12px;
-      box-shadow:
-        0 0 10px #ff008044;
+      box-shadow: 0 0 10px #ff008044;
       color: #ff77b0;
       font-size: 1.2rem;
       line-height: 1.5;
     }
-
     .about-me h2 {
       font-family: 'Orbitron', sans-serif;
       color: #ff0080;
       margin-bottom: 1rem;
       font-size: 2rem;
-      text-shadow:
-        0 0 5px #ff0080,
-        0 0 10px #ff0080;
+      text-shadow: 0 0 5px #ff0080, 0 0 10px #ff0080;
       user-select: none;
     }
-
     .about-me p {
       display: inline-block;
       cursor: pointer;
@@ -212,9 +188,7 @@
       color: #ff0080;
       margin-bottom: 1rem;
       font-size: 2rem;
-      text-shadow:
-        0 0 5px #ff0080,
-        0 0 10px #ff0080;
+      text-shadow: 0 0 5px #ff0080, 0 0 10px #ff0080;
       user-select: none;
     }
     .project-grid {
@@ -226,14 +200,11 @@
       background: #111;
       border-radius: 12px;
       padding: 1.2rem;
-      box-shadow:
-        0 0 10px #00ffcc44;
+      box-shadow: 0 0 10px #00ffcc44;
       transition: box-shadow 0.3s ease;
     }
     .project-card:hover {
-      box-shadow:
-        0 0 15px #ff0080,
-        0 0 25px #ff0080;
+      box-shadow: 0 0 15px #ff0080, 0 0 25px #ff0080;
     }
     .project-card h3 {
       margin-bottom: 0.5rem;
@@ -282,25 +253,17 @@
       background: #00ffcc;
       opacity: 0.8;
       border-radius: 1px;
-      animation-timing-function: linear;
-      animation-name: fall;
-      animation-iteration-count: infinite;
+      animation: fall linear infinite;
     }
     @keyframes fall {
-      0% {
-        transform: translateY(-30px);
-        opacity: 0.8;
-      }
-      100% {
-        transform: translateY(110vh);
-        opacity: 0;
-      }
+      0% { transform: translateY(-30px); opacity: 0.8; }
+      100% { transform: translateY(110vh); opacity: 0; }
     }
   </style>
 </head>
 <body>
-  <!-- Pink Glow Layer -->
   <div id="pink-border-glow"></div>
+  <div id="falling-container"></div>
 
   <div class="container">
     <h1 id="lynx-header">Lynx</h1>
@@ -308,9 +271,9 @@
       <a href="https://discord.gg/fDVUvm8C" target="_blank" rel="noopener noreferrer">Follow the trail</a>
     </p>
     <div class="links">
-      <a href="https://github.com/RNClynx" target="_blank" rel="noopener noreferrer">GitHub</a>
-      <a href="https://www.roblox.com/users/690643432/profile" target="_blank" rel="noopener noreferrer">Roblox</a>
-      <a href="https://www.youtube.com/@69Lynx" target="_blank" rel="noopener noreferrer">YouTube</a>
+      <a href="https://github.com/RNClynx" target="_blank">GitHub</a>
+      <a href="https://www.roblox.com/users/690643432/profile" target="_blank">Roblox</a>
+      <a href="https://www.youtube.com/@69Lynx" target="_blank">YouTube</a>
     </div>
 
     <section class="about-me">
@@ -336,6 +299,7 @@
   </div>
 
   <script>
+    // Emoji on hover
     const sillyText = document.getElementById('silly-text');
     sillyText.addEventListener('mouseenter', (e) => {
       const emoji = document.createElement('div');
@@ -346,6 +310,17 @@
       document.body.appendChild(emoji);
       emoji.addEventListener('animationend', () => emoji.remove());
     });
+
+    // Falling teal lines
+    const container = document.getElementById('falling-container');
+    for (let i = 0; i < 100; i++) {
+      const line = document.createElement('div');
+      line.className = 'falling-line';
+      line.style.left = Math.random() * 100 + 'vw';
+      line.style.animationDuration = (1 + Math.random() * 2) + 's';
+      line.style.animationDelay = Math.random() * 3 + 's';
+      container.appendChild(line);
+    }
   </script>
 </body>
 </html>
