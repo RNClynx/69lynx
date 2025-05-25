@@ -8,9 +8,11 @@
     @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=JetBrains+Mono&display=swap');
 
     * {
-      margin: 0; padding: 0; box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
-    html, body {
+    body, html {
       height: 100%;
       font-family: 'JetBrains Mono', monospace;
       background: #000;
@@ -38,14 +40,6 @@
       100% { background-position: 50px 50px, 50px 50px; }
     }
 
-    #pink-border-glow {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      pointer-events: none;
-      z-index: 7;
-      box-shadow: inset 0 0 40px #ff0080;
-    }
-
     .container {
       max-width: 700px;
       margin: 3rem auto 5rem;
@@ -59,11 +53,7 @@
       font-family: 'Orbitron', sans-serif;
       font-size: 5rem;
       color: #ff0080;
-      text-shadow:
-        0 0 5px #ff0080,
-        0 0 10px #ff0080,
-        0 0 20px #ff0080,
-        0 0 40px #ff0080;
+      text-shadow: 0 0 5px #ff0080, 0 0 10px #ff0080, 0 0 20px #ff0080, 0 0 40px #ff0080;
       animation: flicker 2s infinite alternate;
       margin-bottom: 1rem;
       user-select: none;
@@ -84,20 +74,13 @@
     .follow-trail a:hover,
     .follow-trail a:focus {
       border-color: #ff0080;
-      text-shadow:
-        0 0 5px #ff0080,
-        0 0 10px #ff0080,
-        0 0 20px #ff0080;
+      text-shadow: 0 0 5px #ff0080, 0 0 10px #ff0080, 0 0 20px #ff0080;
     }
 
     @keyframes flicker {
       0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
         opacity: 1;
-        text-shadow:
-          0 0 5px #ff0080,
-          0 0 10px #ff0080,
-          0 0 20px #ff0080,
-          0 0 40px #ff0080;
+        text-shadow: 0 0 5px #ff0080, 0 0 10px #ff0080, 0 0 20px #ff0080, 0 0 40px #ff0080;
       }
       20%, 22%, 24%, 55% {
         opacity: 0.6;
@@ -124,9 +107,7 @@
       user-select: none;
     }
     .links a:hover {
-      box-shadow:
-        0 0 20px #ff0080,
-        0 0 30px #ff0080;
+      box-shadow: 0 0 20px #ff0080, 0 0 30px #ff0080;
       border-color: #ff0080;
       color: #ff0080;
     }
@@ -136,17 +117,17 @@
       background: #111;
       padding: 1.5rem 2rem;
       border-radius: 12px;
-      box-shadow: 0 0 10px #ff008044;
-      color: #ff77b0;
+      box-shadow: 0 0 10px #00ffcc88;
+      color: #00ffcc;
       font-size: 1.2rem;
       line-height: 1.5;
     }
     .about-me h2 {
       font-family: 'Orbitron', sans-serif;
-      color: #ff0080;
+      color: #00ffcc;
       margin-bottom: 1rem;
       font-size: 2rem;
-      text-shadow: 0 0 5px #ff0080, 0 0 10px #ff0080;
+      text-shadow: 0 0 5px #00ffcc, 0 0 10px #00ffcc;
       user-select: none;
     }
     .about-me p {
@@ -164,7 +145,6 @@
       50% { transform: translateX(3px); }
       75% { transform: translateX(-3px); }
     }
-
     .emoji {
       position: fixed;
       pointer-events: none;
@@ -185,10 +165,10 @@
     }
     .projects h2 {
       font-family: 'Orbitron', sans-serif;
-      color: #ff0080;
+      color: #00ffcc;
       margin-bottom: 1rem;
       font-size: 2rem;
-      text-shadow: 0 0 5px #ff0080, 0 0 10px #ff0080;
+      text-shadow: 0 0 5px #00ffcc, 0 0 10px #00ffcc;
       user-select: none;
     }
     .project-grid {
@@ -204,11 +184,11 @@
       transition: box-shadow 0.3s ease;
     }
     .project-card:hover {
-      box-shadow: 0 0 15px #ff0080, 0 0 25px #ff0080;
+      box-shadow: 0 0 15px #00ffcc, 0 0 25px #00ffcc;
     }
     .project-card h3 {
       margin-bottom: 0.5rem;
-      color: #ff0080;
+      color: #00ffcc;
       font-family: 'Orbitron', sans-serif;
     }
     .project-card p {
@@ -228,14 +208,6 @@
       text-decoration: underline;
     }
 
-    footer {
-      text-align: center;
-      font-size: 0.8rem;
-      color: #555;
-      margin: 5rem 0 2rem;
-      user-select: none;
-    }
-
     #falling-container {
       position: fixed;
       top: 0; left: 0;
@@ -253,34 +225,52 @@
       background: #00ffcc;
       opacity: 0.8;
       border-radius: 1px;
-      animation: fall linear infinite;
+      animation: fall 2.5s linear infinite; /* slower */
     }
     @keyframes fall {
       0% { transform: translateY(-30px); opacity: 0.8; }
       100% { transform: translateY(110vh); opacity: 0; }
     }
+
+    #music-toggle {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #111;
+      border: 2px solid #ff0080;
+      color: #ff0080;
+      font-size: 1.2rem;
+      padding: 0.6rem 1rem;
+      border-radius: 12px;
+      cursor: pointer;
+      z-index: 20;
+      box-shadow: 0 0 10px #ff0080aa;
+      transition: all 0.3s ease;
+    }
+    #music-toggle:hover {
+      background: #ff0080;
+      color: #111;
+      box-shadow: 0 0 20px #ff0080;
+    }
   </style>
 </head>
 <body>
-  <div id="pink-border-glow"></div>
   <div id="falling-container"></div>
 
   <div class="container">
-    <h1 id="lynx-header">Lynx</h1>
+    <h1>Lynx</h1>
     <p class="follow-trail">
-      <a href="https://discord.gg/fDVUvm8C" target="_blank" rel="noopener noreferrer">Follow the trail</a>
+      <a href="https://discord.gg/fDVUvm8C" target="_blank">Follow the trail</a>
     </p>
     <div class="links">
       <a href="https://github.com/RNClynx" target="_blank">GitHub</a>
       <a href="https://www.roblox.com/users/690643432/profile" target="_blank">Roblox</a>
       <a href="https://www.youtube.com/@69Lynx" target="_blank">YouTube</a>
     </div>
-
     <section class="about-me">
       <h2>About Me</h2>
       <p id="silly-text">I'm too silly</p>
     </section>
-
     <section class="projects">
       <h2>Projects</h2>
       <div class="project-grid">
@@ -298,8 +288,12 @@
     </section>
   </div>
 
+  <audio id="bg-music" loop>
+    <source src="https://cdn.pixabay.com/download/audio/2022/11/16/audio_ae1fbdc7e4.mp3?filename=lofi-study-112191.mp3" type="audio/mp3">
+  </audio>
+  <button id="music-toggle" aria-label="Toggle music">🎵</button>
+
   <script>
-    // Emoji on hover
     const sillyText = document.getElementById('silly-text');
     sillyText.addEventListener('mouseenter', (e) => {
       const emoji = document.createElement('div');
@@ -311,15 +305,28 @@
       emoji.addEventListener('animationend', () => emoji.remove());
     });
 
-    // Falling teal lines
-    const container = document.getElementById('falling-container');
-    for (let i = 0; i < 100; i++) {
+    const bgMusic = document.getElementById('bg-music');
+    const musicToggle = document.getElementById('music-toggle');
+    let isPlaying = false;
+    musicToggle.addEventListener('click', () => {
+      if (isPlaying) {
+        bgMusic.pause();
+        musicToggle.textContent = '🎵';
+      } else {
+        bgMusic.volume = 0.5;
+        bgMusic.play();
+        musicToggle.textContent = '🔇';
+      }
+      isPlaying = !isPlaying;
+    });
+
+    const fallingContainer = document.getElementById('falling-container');
+    for (let i = 0; i < 80; i++) {
       const line = document.createElement('div');
       line.className = 'falling-line';
       line.style.left = Math.random() * 100 + 'vw';
-      line.style.animationDuration = (1 + Math.random() * 2) + 's';
-      line.style.animationDelay = Math.random() * 3 + 's';
-      container.appendChild(line);
+      line.style.animationDelay = Math.random() * 5 + 's';
+      fallingContainer.appendChild(line);
     }
   </script>
 </body>
