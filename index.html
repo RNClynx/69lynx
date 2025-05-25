@@ -39,6 +39,51 @@
     100% { background-position: 50px 50px, 50px 50px; }
   }
 
+  /* Falling lines container fixed at top */
+  .falling-lines {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 150px; /* initial height */
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 15;
+    background: transparent;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+  }
+
+  /* Each vertical teal line */
+  .falling-line {
+    width: 2px;
+    height: 100%;
+    background: #00ffcc;
+    opacity: 0.7;
+    animation: fallAnim 2s linear infinite;
+    border-radius: 1px;
+    filter: drop-shadow(0 0 3px #00ffcc);
+  }
+  .falling-line:nth-child(odd) {
+    animation-delay: 0s;
+  }
+  .falling-line:nth-child(even) {
+    animation-delay: 1s;
+  }
+
+  @keyframes fallAnim {
+    0% {
+      transform: translateY(-100%);
+      opacity: 0.7;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+  }
+
   /* Main container */
   .container {
     max-width: 700px;
@@ -215,83 +260,18 @@
     margin: 5rem 0 2rem;
     user-select: none;
   }
+
+  /* Gradient fade top and bottom for scroll vibe */
+  body::after {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 4rem;
+    pointer-events: none;
+    background: linear-gradient(to bottom, #000 100%, transparent);
+    z-index: 20;
+  }
   .fade-bottom {
     position: fixed;
     bottom: 0; left: 0; right: 0;
-    height: 4rem;
-    pointer-events: none;
-    background: linear-gradient(to top, #000 100%, transparent);
-    z-index: 20;
-  }
-
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}
-
-body::after {
-    content: "";
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    box-shadow: 0 0 30px 5px #ff0080 inset;
-    pointer-events: none;
-    z-index: 5;
-    opacity: 0.4;
-    animation: borderPulse 5s ease-in-out infinite;
-  }
-
-  @keyframes borderPulse {
-    0%, 100% {
-      opacity: 0.4;
-      box-shadow: 0 0 30px 5px #ff0080 inset;
-    }
-    50% {
-      opacity: 0.7;
-      box-shadow: 0 0 60px 12px #ff0080 inset;
-    }
-  }
-</style>
-</head>
-<body>
-  <div class="container">
-    <h1>Lynx</h1>
-    <p class="follow-trail">
-      <a href="https://discord.gg/fDVUvm8C" target="_blank" rel="noopener noreferrer">Follow the trail</a>
-    </p>
-    <div class="links">
-      <a href="https://github.com/RNClynx" target="_blank" rel="noopener noreferrer">GitHub</a>
-      <a href="https://www.roblox.com/users/690643432/profile" target="_blank" rel="noopener noreferrer">Roblox</a>
-      <a href="https://www.youtube.com/@69Lynx" target="_blank" rel="noopener noreferrer">Youtube</a>
-    </div>
-
-    <!-- About Me Section -->
-    <section class="about-me">
-      <h2>About Me</h2>
-      <p>
-         im too silly 
-      </p>
-    </section>
-
-    <!-- Project Showcase Section -->
-    <section class="projects">
-      <h2>Project Showcase</h2>
-      <div class="project-grid">
-        <div class="project-card">
-          <h3>69lynx Website</h3>
-          <p>my personal site, hosting all my links and projects.</p>
-          <a href="https://69lynx.com" target="_blank" rel="noopener noreferrer">Visit site</a>
-        </div>
-        <div class="project-card">
-          <h3>GitHub Repo</h3>
-          <p>the code behind my site, open for improvements.</p>
-          <a href="https://github.com/RNClynx/69lynx" target="_blank" rel="noopener noreferrer">View on GitHub</a>
-        </div>
-        <!-- Add more projects here -->
-      </div>
-    </section>
-  </div>
-
-  <div class="fade-bottom"></div>
-</body>
-</html>
+    height: 
