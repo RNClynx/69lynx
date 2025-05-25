@@ -7,7 +7,6 @@
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=JetBrains+Mono&display=swap');
 
-  /* Reset */
   * {
     margin: 0; padding: 0; box-sizing: border-box;
   }
@@ -21,7 +20,6 @@
     position: relative;
   }
 
-  /* Neon Grid Background */
   body::before {
     content: '';
     position: fixed;
@@ -39,7 +37,6 @@
     100% { background-position: 50px 50px, 50px 50px; }
   }
 
-  /* Main container */
   .container {
     max-width: 700px;
     margin: 3rem auto 5rem;
@@ -51,7 +48,6 @@
     border-radius: 12px;
   }
 
-  /* Heading Lynx with pink glow and flicker */
   h1 {
     font-family: 'Orbitron', sans-serif;
     font-size: 5rem;
@@ -66,7 +62,6 @@
     user-select: none;
   }
 
-  /* Follow the trail link styling */
   .follow-trail a {
     font-family: 'JetBrains Mono', monospace;
     color: #ff0080;
@@ -88,7 +83,6 @@
       0 0 20px #ff0080;
   }
 
-  /* Flicker keyframes */
   @keyframes flicker {
     0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
       opacity: 1;
@@ -104,7 +98,6 @@
     }
   }
 
-  /* Links container */
   .links {
     margin-top: 3rem;
     display: flex;
@@ -131,7 +124,6 @@
     color: #ff0080;
   }
 
-  /* About Me section */
   .about-me {
     margin-top: 4rem;
     background: #111;
@@ -154,7 +146,6 @@
       0 0 10px #ff0080;
   }
 
-  /* Project showcase */
   .projects {
     margin-top: 4rem;
     text-align: left;
@@ -209,7 +200,6 @@
     text-decoration: underline;
   }
 
-  /* Footer */
   footer {
     text-align: center;
     font-size: 0.8rem;
@@ -259,15 +249,23 @@
     position: fixed;
     top: 0;
     bottom: 0;
-    width: 120px; /* fixed width for left and right sides */
     pointer-events: none;
     z-index: 15;
   }
   .falling-lines-container.left {
     left: 0;
+    width: 480px;
   }
   .falling-lines-container.right {
     right: 0;
+    width: 480px;
+  }
+  .falling-lines-container.top-middle {
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 200px; /* only top area */
+    width: 700px;
   }
 
   /* Falling line style */
@@ -283,7 +281,7 @@
   }
   @keyframes fall {
     to {
-      transform: translateY(110vh); /* fall beyond bottom */
+      transform: translateY(110vh);
       opacity: 0;
     }
   }
@@ -292,6 +290,7 @@
 <body>
   <div class="falling-lines-container left"></div>
   <div class="falling-lines-container right"></div>
+  <div class="falling-lines-container top-middle"></div>
 
   <div class="container">
     <h1>Lynx</h1>
@@ -304,7 +303,6 @@
       <a href="https://www.youtube.com/@69Lynx" target="_blank" rel="noopener noreferrer">Youtube</a>
     </div>
 
-    <!-- About Me Section -->
     <section class="about-me">
       <h2>About Me</h2>
       <p>
@@ -312,7 +310,6 @@
       </p>
     </section>
 
-    <!-- Project Showcase Section -->
     <section class="projects">
       <h2>Project Showcase</h2>
       <div class="project-grid">
@@ -335,18 +332,24 @@
 <script>
   const leftContainer = document.querySelector('.falling-lines-container.left');
   const rightContainer = document.querySelector('.falling-lines-container.right');
-
+  const topMiddleContainer = document.querySelector('.falling-lines-container.top-middle');
   const container = document.querySelector('.container');
 
-  // Get bounding box of center container so we can avoid spawning lines there horizontally
   function getCenterBounds() {
     return container.getBoundingClientRect();
   }
 
-  // Create falling lines inside a container avoiding center horizontal zone
-  function createFallingLines(container, side, count = 30) {
+  // Create falling lines inside a container avoiding center horizontal zone if specified
+  function createFallingLines(container, options) {
+    const {
+      count = 40,
+      avoidCenter = false,
+      verticalLimit = null,
+      horizontalPadding = 20
+    } = options || {};
+
     const containerWidth = container.clientWidth;
-    const containerHeight = window.innerHeight;
+    const containerHeight = verticalLimit || window.innerHeight;
 
     const centerBounds = getCenterBounds();
 
@@ -354,39 +357,51 @@
       const line = document.createElement('div');
       line.classList.add('falling-line');
 
-      // Random width between 1 and 3 px
       const lineWidth = Math.random() * 2 + 1;
       line.style.width = `${lineWidth}px`;
 
-      // Random height between 15 and 30 px
       const lineHeight = Math.random() * 15 + 15;
       line.style.height = `${lineHeight}px`;
 
-      // horizontal position within container width but avoid the vertical center area (where the container is)
-      // On left container, x will be between 0 and containerWidth, but offset from center container
       let x;
-      if (side === 'left') {
-        x = Math.random() * containerWidth;
+
+      if (avoidCenter) {
+        // Choose x outside centerBounds horizontally with some padding
+        const centerLeftInContainer = centerBounds.left - container.getBoundingClientRect().left;
+        const centerRightInContainer = centerBounds.right - container.getBoundingClientRect().left;
+
+        // We'll divide the container horizontally into two safe zones:
+        // left zone: 0 to centerLeftInContainer - padding
+        // right zone: centerRightInContainer + padding to containerWidth
+
+        // Randomly pick left or right side
+        if (Math.random() < 0.5) {
+          // left side range
+          x = Math.random() * Math.max(0, centerLeftInContainer - horizontalPadding);
+        } else {
+          // right side range
+          x = Math.random() * Math.max(0, containerWidth - (centerRightInContainer + horizontalPadding)) + (centerRightInContainer + horizontalPadding);
+        }
       } else {
         x = Math.random() * containerWidth;
       }
+
       line.style.left = `${x}px`;
 
-      // Start line above viewport randomly up to -100px so they don't all start aligned
+      // Start above viewport, randomized so they don't all fall aligned
       line.style.top = `${-Math.random() * 100}px`;
 
-      // Animation duration between 4 and 8 seconds (fall speed)
+      // Animation duration between 4 and 8 seconds
       const duration = Math.random() * 4 + 4;
       line.style.animationDuration = `${duration}s`;
 
-      // Animation delay so lines don't fall all at once
+      // Animation delay randomized up to 8 seconds
       line.style.animationDelay = `${Math.random() * 8}s`;
 
       container.appendChild(line);
     }
   }
 
-  // Clear existing lines (in case of window resize)
   function clearLines(container) {
     while (container.firstChild) {
       container.removeChild(container.firstChild);
@@ -396,15 +411,18 @@
   function setupLines() {
     clearLines(leftContainer);
     clearLines(rightContainer);
-    createFallingLines(leftContainer, 'left', 40);
-    createFallingLines(rightContainer, 'right', 40);
+    clearLines(topMiddleContainer);
+
+    // Left and right cover sides fully, no center avoidance needed there since container is centered and these are on edges
+    createFallingLines(leftContainer, { count: 50 });
+    createFallingLines(rightContainer, { count: 50 });
+
+    // Top-middle: avoid center horizontal container, only top 200px height
+    createFallingLines(topMiddleContainer, { count: 50, avoidCenter: true, verticalLimit: 200, horizontalPadding: 40 });
   }
 
   window.addEventListener('resize', setupLines);
   window.addEventListener('load', setupLines);
 </script>
-</body>
-</html>
-
 </body>
 </html>
