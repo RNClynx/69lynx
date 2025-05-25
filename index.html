@@ -234,7 +234,27 @@
     background: linear-gradient(to top, #000 100%, transparent);
     z-index: 20;
   }
+body::after {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    box-shadow: 0 0 30px 5px #ff0080 inset;
+    pointer-events: none;
+    z-index: 5;
+    opacity: 0.4;
+    animation: borderPulse 5s ease-in-out infinite;
+  }
 
+  @keyframes borderPulse {
+    0%, 100% {
+      opacity: 0.4;
+      box-shadow: 0 0 30px 5px #ff0080 inset;
+    }
+    50% {
+      opacity: 0.7;
+      box-shadow: 0 0 60px 12px #ff0080 inset;
+    }
+  }
 </style>
 </head>
 <body>
