@@ -1,325 +1,214 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Lynx - Follow the Trail</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=JetBrains+Mono&display=swap');
-
-  /* Reset */
-  * {
-    margin: 0; padding: 0; box-sizing: border-box;
-  }
-  body, html {
-    height: 100%;
-    font-family: 'JetBrains Mono', monospace;
-    background: #000;
-    color: #00ffcc;
-    overflow-y: scroll;
-    scroll-behavior: smooth;
-    position: relative;
-  }
-
-  /* Neon Grid Background */
-  body::before {
-    content: '';
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 150px; /* stop above black overlay */
-    top: 0; left: 0; right: 0; bottom: 0;
-    background:
-      linear-gradient(to right, #0ff2 1px, transparent 1px),
-      linear-gradient(to bottom, #0ff2 1px, transparent 1px);
-    background-size: 50px 50px;
-    z-index: 0;
-    animation: gridShift 15s linear infinite;
-    pointer-events: none;
-    animation: gridShift 30s linear infinite;
-  }
-
-  @keyframes gridShift {
-    0% { background-position: 0 0, 0 0; }
-    100% { background-position: 50px 50px, 50px 50px; }
-  }
-
-  /* Falling lines animation */
-  #falling-lines {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    pointer-events: none;
-    z-index: 1;
-    overflow: hidden;
-  }
-  .line {
-    position: absolute;
-    width: 2px;
-    height: 100px;
-    background: linear-gradient(to bottom, #ff0080, #ff008044);
-    opacity: 0.6;
-    animation: fall linear infinite;
-  }
-  @keyframes fall {
-    0% {
-      transform: translateY(-120px);
-      opacity: 0;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lynx</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=JetBrains+Mono&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
-    10% {
-      opacity: 0.6;
+    html, body {
+      height: 100%;
+      font-family: 'JetBrains Mono', monospace;
+      background: #000;
+      color: #fff;
     }
-    100% {
-      transform: translateY(100vh);
-      opacity: 0;
+    #pink-border-glow {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      pointer-events: none;
+      z-index: 7;
+      box-shadow: inset 0 0 40px #ff0080;
     }
-  }
-
-  /* Black gradient overlay at bottom */
-  body::after {
-    content: "";
-    position: fixed;
-    left: 0; right: 0; bottom: 0;
-    height: 150px; /* height of the black overlay */
-    background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
-    pointer-events: none;
-    z-index: 6; /* below pink glow but above main content */
-  }
-  @keyframes gridShift {
-    0% { background-position: 0 0, 0 0; }
-    100% { background-position: 50px 50px, 50px 50px; }
-    z-index: 5;
-  }
-
-  /* Main container */
-  .container {
-    max-width: 700px;
-    margin: 3rem auto 5rem;
-    padding: 1rem 2rem;
-    text-align: center;
-    position: relative;
-    z-index: 10;
-  }
-
-  /* Heading Lynx with pink glow and flicker */
-  h1 {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 5rem;
-    color: #ff0080;
-    text-shadow:
-      0 0 5px #ff0080,
-      0 0 10px #ff0080,
-      0 0 20px #ff0080,
-      0 0 40px #ff0080;
-    animation: flicker 2s infinite alternate;
-    margin-bottom: 1rem;
-    user-select: none;
-  }
-
-  /* Follow the trail link styling */
-  .follow-trail a {
-    font-family: 'JetBrains Mono', monospace;
-    color: #ff0080;
-    font-size: 1.8rem;
-    text-decoration: none;
-    position: relative;
-    padding-bottom: 6px;
-    border-bottom: 2px solid transparent;
-    transition: border-color 0.3s ease;
-    display: inline-block;
-    user-select: none;
-  }
-  .follow-trail a:hover,
-  .follow-trail a:focus {
-    border-color: #ff0080;
-    text-shadow:
-      0 0 5px #ff0080,
-      0 0 10px #ff0080,
-      0 0 20px #ff0080;
-  }
-
-  /* Flicker keyframes */
-  @keyframes flicker {
-    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
-      opacity: 1;
+    .container {
+      max-width: 700px;
+      margin: 3rem auto 5rem;
+      padding: 0 1rem;
+    }
+    h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 5rem;
+      color: #ff0080;
       text-shadow:
         0 0 5px #ff0080,
         0 0 10px #ff0080,
         0 0 20px #ff0080,
         0 0 40px #ff0080;
+      animation: flicker 2s infinite alternate;
+      margin-bottom: 1rem;
+      user-select: none;
     }
-    20%, 22%, 24%, 55% {
-      opacity: 0.6;
-      text-shadow: none;
+    .follow-trail a {
+      text-decoration: none;
+      color: #ff0080;
+      border: 1px solid #ff0080;
+      padding: 0.4rem 0.8rem;
+      border-radius: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      user-select: none;
+      transition: all 0.3s ease;
     }
-  }
-
-  /* Links container */
-  .links {
-    margin-top: 3rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-  .links a {
-    color: #00ffcc;
-    text-decoration: none;
-    border: 1px solid #00ffcc88;
-    padding: 0.8em 1.5em;
-    border-radius: 8px;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    background: #111;
-    box-shadow: 0 0 10px #00ffcc44;
-    user-select: none;
-  }
-  .links a:hover {
-    box-shadow:
-      0 0 20px #ff0080,
-      0 0 30px #ff0080;
-    border-color: #ff0080;
-    color: #ff0080;
-  }
-
-  /* About Me section */
-  .about-me {
-    margin-top: 4rem;
-    background: #111;
-    padding: 1.5rem 2rem;
-    border-radius: 12px;
-    box-shadow:
-      0 0 10px #ff008044;
-    color: #ff77b0;
-    font-size: 1.2rem;
-    line-height: 1.5;
-  }
-  .about-me h2 {
-    font-family: 'Orbitron', sans-serif;
-    color: #ff0080;
-    margin-bottom: 1rem;
-    font-size: 2rem;
-    text-shadow:
-      0 0 5px #ff0080,
-      0 0 10px #ff0080;
-    user-select: none;
-  }
-
-  /* About Me text: split letters for wave jiggle */
-  #silly-text {
-    display: inline-block;
-    cursor: pointer;
-    user-select: none;
-    white-space: pre; /* Preserve spaces exactly */
-    font-weight: 600;
-    font-size: 1.4rem;
-  }
-  #silly-text span {
-    display: inline-block;
-    transition: transform 0.2s ease;
-  }
-  #silly-text:hover span {
-    animation-name: bounceWave;
-    animation-duration: 0.8s;
-    animation-timing-function: ease-in-out;
-    animation-iteration-count: infinite;
-  }
-  #silly-text:hover span:nth-child(1) { animation-delay: 0s; }
-  #silly-text:hover span:nth-child(2) { animation-delay: 0.1s; }
-  #silly-text:hover span:nth-child(3) { animation-delay: 0.2s; }
-  #silly-text:hover span:nth-child(4) { animation-delay: 0.3s; }
-  #silly-text:hover span:nth-child(5) { animation-delay: 0.4s; }
-  #silly-text:hover span:nth-child(6) { animation-delay: 0.5s; }
-  #silly-text:hover span:nth-child(7) { animation-delay: 0.6s; }
-  #silly-text:hover span:nth-child(8) { animation-delay: 0.7s; }
-  #silly-text:hover span:nth-child(9) { animation-delay: 0.8s; }
-  #silly-text:hover span:nth-child(10) { animation-delay: 0.9s; }
-  #silly-text:hover span:nth-child(11) { animation-delay: 1s; }
-
-  @keyframes bounceWave {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-8px); }
-  }
-
-  /* Emoji styles */
-  .emoji {
-    position: fixed;
-    pointer-events: none;
-    font-size: 1.5rem;
-    user-select: none;
-    animation: floatUp 1s forwards;
-    opacity: 1;
-    z-index: 15;
-  }
-  @keyframes floatUp {
-    0% { transform: translateY(0); opacity: 1; }
-    100% { transform: translateY(-40px); opacity: 0; }
-  }
-
-  /* Project showcase */
-  .projects {
-    margin-top: 4rem;
-    text-align: left;
-  }
-  .projects h2 {
-    font-family: 'Orbitron', sans-serif;
-    color: #ff0080;
-    margin-bottom: 1rem;
-    font-size: 2rem;
-    text-shadow:
-      0 0 5px #ff0080,
-      0 0 10px #ff0080;
-    user-select: none;
-  }
-  .project-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
-    gap: 1.5rem;
-  }
-  .project-card {
-    background: #111;
-    border-radius: 12px;
-    padding: 1.2rem;
-    box-shadow:
-      0 0 10px #00ffcc44;
-    transition: box-shadow 0.3s ease;
-  }
-  .project-card:hover {
-    box-shadow:
-      0 0 15px #ff0080,
-      0 0 25px #ff0080;
-  }
-  .project-card h3 {
-    margin-bottom: 0.5rem;
-    color: #ff0080;
-    font-family: 'Orbitron', sans-serif;
-  }
-  .project-card p {
-    color: #00ffcc;
-    font-size: 1rem;
-    line-height: 1.3;
-  }
-  .project-card a {
-    color: #ff0080;
-    text-decoration: none;
-    font-weight: 600;
-    display: inline-block;
-    margin-top: 0.8rem;
-    user-select: none;
-  }
-  .project-card a:hover {
-    text-decoration: underline;
-  }
-
-  /* Footer */
-  footer {
-    text-align: center;
-    font-size: 0.8rem;
-    color: #555;
-    margin: 5rem 0 2rem;
-    user-select: none;
-  }
-</style>
+    .follow-trail a:hover, .follow-trail a:focus {
+      border-color: #ff0080;
+      text-shadow:
+        0 0 5px #ff0080,
+        0 0 10px #ff0080,
+        0 0 20px #ff0080;
+    }
+    @keyframes flicker {
+      0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+        opacity: 1;
+        text-shadow:
+          0 0 5px #ff0080,
+          0 0 10px #ff0080,
+          0 0 20px #ff0080,
+          0 0 40px #ff0080;
+      }
+      20%, 22%, 24%, 55% {
+        opacity: 0.6;
+        text-shadow: none;
+      }
+    }
+    .links a {
+      color: #ff0080;
+      text-decoration: none;
+      font-family: 'JetBrains Mono', monospace;
+      border: 1px solid transparent;
+      padding: 0.4rem 0.6rem;
+      border-radius: 8px;
+      margin-right: 1rem;
+      user-select: none;
+      transition: all 0.3s ease;
+    }
+    .links a:hover {
+      box-shadow:
+        0 0 20px #ff0080,
+        0 0 30px #ff0080;
+      border-color: #ff0080;
+      color: #ff0080;
+    }
+    .about-me, .projects {
+      margin-top: 3rem;
+      color: #ff0080;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .about-me h2, .projects h2 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      text-shadow:
+        0 0 5px #ff0080,
+        0 0 10px #ff0080;
+      user-select: none;
+    }
+    .about-me p {
+      font-size: 1.2rem;
+      line-height: 1.5;
+      color: #ff77b0;
+    }
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1.5rem;
+    }
+    .project-card {
+      background: #111;
+      padding: 1.5rem 2rem;
+      border-radius: 12px;
+      box-shadow: 0 0 10px #ff008044;
+      color: #ff77b0;
+      transition: box-shadow 0.3s ease;
+    }
+    .project-card:hover {
+      box-shadow:
+        0 0 15px #ff0080,
+        0 0 25px #ff0080;
+    }
+    .project-card h3 {
+      color: #ff0080;
+      font-family: 'Orbitron', sans-serif;
+      margin-bottom: 0.5rem;
+    }
+    .project-card p {
+      font-size: 1rem;
+      line-height: 1.3;
+      margin-bottom: 1rem;
+    }
+    .project-card a {
+      color: #ff0080;
+      text-decoration: underline;
+      font-size: 0.9rem;
+    }
+    footer {
+      text-align: center;
+      font-size: 0.8rem;
+      color: #555;
+      margin: 5rem 0 2rem;
+      user-select: none;
+    }
+    #falling-container {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 5;
+    }
+    .falling-line {
+      position: absolute;
+      top: -20px;
+      width: 2px;
+      height: 40px;
+      background: #ff0080;
+      border-radius: 1px;
+      animation: fall linear infinite;
+      opacity: 0.8;
+    }
+    @keyframes fall {
+      0% {
+        transform: translateY(-30px);
+        opacity: 0.8;
+      }
+      100% {
+        transform: translateY(110vh);
+        opacity: 0;
+      }
+    }
+    #music-toggle {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #111;
+      border: 2px solid #ff0080;
+      color: #ff0080;
+      font-size: 1.2rem;
+      padding: 0.6rem 1rem;
+      border-radius: 12px;
+      cursor: pointer;
+      z-index: 20;
+      box-shadow: 0 0 10px #ff0080aa;
+      transition: all 0.3s ease;
+    }
+    #music-toggle:hover {
+      background: #ff0080;
+      color: #111;
+      box-shadow: 0 0 20px #ff0080;
+    }
+  </style>
 </head>
 <body>
+  <div id="pink-border-glow"></div>
+  <div id="falling-container"></div>
+
   <div class="container">
-    <h1 id="lynx-header">Lynx</h1>
+    <h1>Lynx</h1>
     <p class="follow-trail">
       <a href="https://discord.gg/fDVUvm8C" target="_blank" rel="noopener noreferrer">Follow the trail</a>
     </p>
@@ -331,99 +220,65 @@
 
     <section class="about-me">
       <h2>About Me</h2>
-      <p id="silly-text"></p>
+      <p id="silly-text">I'm too silly</p>
     </section>
-<div id="falling-lines"></div>
 
     <section class="projects">
       <h2>Projects</h2>
       <div class="project-grid">
         <div class="project-card">
-          <h3>Neon Grid Background</h3>
-          <p>A subtle animated neon grid to give cyberpunk vibes.</p>
-          <a href="#">Learn More</a>
-        </div>
-        <div class="project-card">
           <h3>Falling Lines Animation</h3>
-          <p>Vertical neon lines falling smoothly from top to bottom.</p>
-          <a href="#">Learn More</a>
+          <p>A nice animation of falling lines.</p>
         </div>
       </div>
     </section>
-<div class="container">
-  <h1 id="lynx-header">Lynx</h1>
-  <p class="follow-trail">
-    <a href="https://discord.gg/fDVUvm8C" target="_blank" rel="noopener noreferrer">Follow the trail</a>
-  </p>
-  <div class="links">
-    <a href="https://github.com/RNClynx" target="_blank" rel="noopener noreferrer">GitHub</a>
-    <a href="https://www.roblox.com/users/690643432/profile" target="_blank" rel="noopener noreferrer">Roblox</a>
-    <a href="https://www.youtube.com/@69Lynx" target="_blank" rel="noopener noreferrer">YouTube</a>
   </div>
 
-  <section class="about-me">
-    <h2>About Me</h2>
-    <p id="silly-text"></p>
-  </section>
+  <audio id="bg-music" loop>
+    <source src="https://cdn.pixabay.com/download/audio/2022/11/16/audio_ae1fbdc7e4.mp3?filename=lofi-study-112191.mp3" type="audio/mp3" />
+  </audio>
+  <button id="music-toggle" aria-label="Toggle music">🎵</button>
 
-  <section class="projects">
-    <h2>Projects</h2>
-    <div class="project-grid">
-      <div class="project-card">
-        <h3>Neon Grid Background</h3>
-        <p>A subtle animated neon grid to give cyberpunk vibes.</p>
-        <a href="#">Learn More</a>
-      </div>
-      <div class="project-card">
-        <h3>Falling Lines Animation</h3>
-        <p>Vertical neon lines falling smoothly from top to bottom.</p>
-        <a href="#">Learn More</a>
-      </div>
-    </div>
-  </section>
-</div>
-
-<script>
-  // Create falling lines
-  const linesCount = 30;
-  const container = document.getElementById('falling-lines');
-  for(let i = 0; i < linesCount; i++) {
-    const line = document.createElement('div');
-    line.classList.add('line');
-    line.style.left = (Math.random() * 100) + 'vw';
-    line.style.animationDuration = (5 + Math.random() * 5) + 's';
-    line.style.animationDelay = (Math.random() * 10) + 's';
-    line.style.height = (50 + Math.random() * 100) + 'px';
-    container.appendChild(line);
-  }
-
-  // Wrap each letter in #silly-text with a span for individual animation
-  const sillyText = document.getElementById('silly-text');
-  const text = "I'm too silly";
-  sillyText.innerHTML = '';
-
-  for (let i = 0; i < text.length; i++) {
-    const char = text[i];
-    const span = document.createElement('span');
-    span.textContent = text[i];
-    span.textContent = char;
-    sillyText.appendChild(span);
-  }
-
-  // Emoji + floating effect on hover at cursor
-  sillyText.addEventListener('mouseenter', (e) => {
-    const emoji = document.createElement('div');
-    emoji.textContent = '😂';
-    emoji.classList.add('emoji');
-    emoji.style.left = e.clientX + 'px';
-    emoji.style.top = e.clientY + 'px';
-
-    document.body.appendChild(emoji);
-
-    emoji.addEventListener('animationend', () => {
-      emoji.remove();
+  <script>
+    // Emoji on hover
+    const sillyText = document.getElementById('silly-text');
+    sillyText.addEventListener('mouseenter', () => {
+      const emoji = document.createElement('div');
+      emoji.textContent = '😜';
+      emoji.className = 'emoji';
+      emoji.style.position = 'fixed';
+      emoji.style.left = sillyText.getBoundingClientRect().left + 'px';
+      emoji.style.top = sillyText.getBoundingClientRect().top - 30 + 'px';
+      document.body.appendChild(emoji);
+      setTimeout(() => emoji.remove(), 1000);
     });
-  });
-</script>
+
+    // Falling lines
+    const fallingContainer = document.getElementById('falling-container');
+    for (let i = 0; i < 80; i++) {
+      const line = document.createElement('div');
+      line.className = 'falling-line';
+      line.style.left = Math.random() * 100 + 'vw';
+      line.style.animationDelay = Math.random() * 3 + 's';
+      line.style.animationDuration = (1 + Math.random() * 2) + 's';
+      fallingContainer.appendChild(line);
+    }
+
+    // Music toggle
+    const bgMusic = document.getElementById('bg-music');
+    const musicToggle = document.getElementById('music-toggle');
+    let isPlaying = false;
+    musicToggle.addEventListener('click', () => {
+      if (isPlaying) {
+        bgMusic.pause();
+        musicToggle.textContent = '🎵';
+      } else {
+        bgMusic.volume = 0.5;
+        bgMusic.play();
+        musicToggle.textContent = '🔇';
+      }
+      isPlaying = !isPlaying;
+    });
+  </script>
 </body>
 </html>
