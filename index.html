@@ -3,233 +3,212 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Lynx - Follow the Trail</title>
+  <title>Lynx</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=JetBrains+Mono&display=swap');
 
     * {
-      margin: 0;
-      padding: 0;
+      margin: 0; 
+      padding: 0; 
       box-sizing: border-box;
     }
-    body, html {
+
+    html, body {
       height: 100%;
       font-family: 'JetBrains Mono', monospace;
       background: #000;
-      color: #00ffcc;
-      overflow-y: scroll;
-      scroll-behavior: smooth;
-      position: relative;
+      color: #fff;
     }
 
-    body::before {
-      content: '';
+    #pink-border-glow {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background:
-        linear-gradient(to right, #0ff2 1px, transparent 1px),
-        linear-gradient(to bottom, #0ff2 1px, transparent 1px);
-      background-size: 50px 50px;
-      z-index: 0;
-      animation: gridShift 15s linear infinite;
       pointer-events: none;
-    }
-
-    @keyframes gridShift {
-      0% { background-position: 0 0, 0 0; }
-      100% { background-position: 50px 50px, 50px 50px; }
+      z-index: 7;
+      box-shadow: inset 0 0 40px #ff0080;
     }
 
     .container {
       max-width: 700px;
       margin: 3rem auto 5rem;
-      padding: 1rem 2rem;
-      text-align: center;
-      position: relative;
-      z-index: 10;
+      padding: 0 1rem;
     }
 
     h1 {
       font-family: 'Orbitron', sans-serif;
       font-size: 5rem;
       color: #ff0080;
-      text-shadow: 0 0 5px #ff0080, 0 0 10px #ff0080, 0 0 20px #ff0080, 0 0 40px #ff0080;
+      text-shadow:
+        0 0 5px #ff0080,
+        0 0 10px #ff0080,
+        0 0 20px #ff0080,
+        0 0 40px #ff0080;
       animation: flicker 2s infinite alternate;
       margin-bottom: 1rem;
       user-select: none;
     }
 
     .follow-trail a {
-      font-family: 'JetBrains Mono', monospace;
       color: #ff0080;
-      font-size: 1.8rem;
       text-decoration: none;
-      position: relative;
-      padding-bottom: 6px;
-      border-bottom: 2px solid transparent;
-      transition: border-color 0.3s ease;
-      display: inline-block;
+      border: 2px solid transparent;
+      padding: 0.5rem 1rem;
+      border-radius: 12px;
+      transition: all 0.3s ease;
       user-select: none;
     }
+
     .follow-trail a:hover,
     .follow-trail a:focus {
       border-color: #ff0080;
-      text-shadow: 0 0 5px #ff0080, 0 0 10px #ff0080, 0 0 20px #ff0080;
+      text-shadow:
+        0 0 5px #ff0080,
+        0 0 10px #ff0080,
+        0 0 20px #ff0080;
     }
 
     @keyframes flicker {
       0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
         opacity: 1;
-        text-shadow: 0 0 5px #ff0080, 0 0 10px #ff0080, 0 0 20px #ff0080, 0 0 40px #ff0080;
+        text-shadow:
+          0 0 5px #ff0080,
+          0 0 10px #ff0080,
+          0 0 20px #ff0080,
+          0 0 40px #ff0080;
       }
       20%, 22%, 24%, 55% {
         opacity: 0.6;
-        text-shadow: none;
       }
     }
 
-    .links {
-      margin-top: 3rem;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
     .links a {
-      color: #00ffcc;
+      color: #ff0080;
       text-decoration: none;
-      border: 1px solid #00ffcc88;
-      padding: 0.8em 1.5em;
-      border-radius: 8px;
-      font-weight: 600;
-      transition: all 0.3s ease;
-      background: #111;
-      box-shadow: 0 0 10px #00ffcc44;
+      margin-right: 1rem;
       user-select: none;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+      padding: 0.3rem 0.6rem;
+      border-radius: 8px;
     }
+
     .links a:hover {
-      box-shadow: 0 0 20px #ff0080, 0 0 30px #ff0080;
+      box-shadow:
+        0 0 20px #ff0080,
+        0 0 30px #ff0080;
       border-color: #ff0080;
       color: #ff0080;
     }
 
-    .about-me {
-      margin-top: 4rem;
+    .about-me, .projects {
       background: #111;
       padding: 1.5rem 2rem;
       border-radius: 12px;
-      box-shadow: 0 0 10px #00ffcc88;
-      color: #00ffcc;
+      box-shadow: 0 0 10px #ff008044;
+      color: #ff77b0;
       font-size: 1.2rem;
       line-height: 1.5;
+      margin-top: 3rem;
     }
-    .about-me h2 {
+
+    .about-me h2, .projects h2 {
       font-family: 'Orbitron', sans-serif;
-      color: #00ffcc;
+      color: #ff0080;
       margin-bottom: 1rem;
       font-size: 2rem;
-      text-shadow: 0 0 5px #00ffcc, 0 0 10px #00ffcc;
+      text-shadow:
+        0 0 5px #ff0080,
+        0 0 10px #ff0080;
       user-select: none;
     }
-    .about-me p {
-      display: inline-block;
-      cursor: pointer;
-      position: relative;
-      user-select: none;
-    }
-    .about-me p:hover {
-      animation: jiggle 0.5s ease;
-    }
-    @keyframes jiggle {
-      0%, 100% { transform: translateX(0); }
-      25% { transform: translateX(-3px); }
-      50% { transform: translateX(3px); }
-      75% { transform: translateX(-3px); }
-    }
+
     .emoji {
       position: fixed;
       pointer-events: none;
-      font-size: 1.5rem;
+      font-size: 2rem;
+      animation: floatUp 1s ease forwards;
       user-select: none;
-      animation: floatUp 1s forwards;
-      opacity: 1;
       z-index: 15;
     }
+
     @keyframes floatUp {
-      0% { transform: translateY(0); opacity: 1; }
-      100% { transform: translateY(-40px); opacity: 0; }
+      0% { opacity: 1; transform: translateY(0); }
+      100% { opacity: 0; transform: translateY(-40px); }
     }
 
-    .projects {
-      margin-top: 4rem;
-      text-align: left;
-    }
-    .projects h2 {
-      font-family: 'Orbitron', sans-serif;
-      color: #00ffcc;
-      margin-bottom: 1rem;
-      font-size: 2rem;
-      text-shadow: 0 0 5px #00ffcc, 0 0 10px #00ffcc;
-      user-select: none;
-    }
     .project-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 1.5rem;
     }
+
     .project-card {
       background: #111;
       border-radius: 12px;
-      padding: 1.2rem;
-      box-shadow: 0 0 10px #00ffcc44;
+      padding: 1rem;
+      box-shadow: 0 0 10px #ff008044;
       transition: box-shadow 0.3s ease;
+      color: #ff0080;
     }
+
     .project-card:hover {
-      box-shadow: 0 0 15px #00ffcc, 0 0 25px #00ffcc;
+      box-shadow:
+        0 0 15px #ff0080,
+        0 0 25px #ff0080;
     }
+
     .project-card h3 {
       margin-bottom: 0.5rem;
-      color: #00ffcc;
+      color: #ff0080;
       font-family: 'Orbitron', sans-serif;
     }
+
     .project-card p {
-      color: #00ffcc;
-      font-size: 1rem;
-      line-height: 1.3;
+      margin-bottom: 0.5rem;
     }
+
     .project-card a {
       color: #ff0080;
-      text-decoration: none;
-      font-weight: 600;
-      display: inline-block;
-      margin-top: 0.8rem;
-      user-select: none;
-    }
-    .project-card a:hover {
       text-decoration: underline;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.8rem;
+      color: #555;
+      margin: 5rem 0 2rem;
+      user-select: none;
     }
 
     #falling-container {
       position: fixed;
       top: 0; left: 0;
-      width: 100%;
+      width: 100vw;
       height: 100vh;
       pointer-events: none;
-      z-index: 8;
-      overflow: visible;
+      z-index: 5;
+      overflow: hidden;
     }
+
     .falling-line {
       position: absolute;
-      top: -20px;
       width: 2px;
-      height: 25px;
-      background: #00ffcc;
+      height: 20px;
+      background: #ff0080;
       opacity: 0.8;
       border-radius: 1px;
-      animation: fall 2.5s linear infinite; /* slower */
+      animation: fall linear infinite;
     }
+
     @keyframes fall {
-      0% { transform: translateY(-30px); opacity: 0.8; }
-      100% { transform: translateY(110vh); opacity: 0; }
+      0% {
+        transform: translateY(-30px);
+        opacity: 0.8;
+      }
+      100% {
+        transform: translateY(110vh);
+        opacity: 0;
+      }
     }
 
     #music-toggle {
@@ -246,7 +225,9 @@
       z-index: 20;
       box-shadow: 0 0 10px #ff0080aa;
       transition: all 0.3s ease;
+      user-select: none;
     }
+
     #music-toggle:hover {
       background: #ff0080;
       color: #111;
@@ -255,59 +236,60 @@
   </style>
 </head>
 <body>
+  <div id="pink-border-glow"></div>
   <div id="falling-container"></div>
 
   <div class="container">
-    <h1>Lynx</h1>
+    <h1 id="lynx-header">Lynx</h1>
     <p class="follow-trail">
-      <a href="https://discord.gg/fDVUvm8C" target="_blank">Follow the trail</a>
+      <a href="https://discord.gg/fDVUvm8C" target="_blank" rel="noopener noreferrer">Follow the trail</a>
     </p>
     <div class="links">
-      <a href="https://github.com/RNClynx" target="_blank">GitHub</a>
-      <a href="https://www.roblox.com/users/690643432/profile" target="_blank">Roblox</a>
-      <a href="https://www.youtube.com/@69Lynx" target="_blank">YouTube</a>
+      <a href="https://github.com/RNClynx" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://www.roblox.com/users/690643432/profile" target="_blank" rel="noopener noreferrer">Roblox</a>
+      <a href="https://www.youtube.com/@69Lynx" target="_blank" rel="noopener noreferrer">YouTube</a>
     </div>
+
     <section class="about-me">
       <h2>About Me</h2>
       <p id="silly-text">I'm too silly</p>
     </section>
+
     <section class="projects">
       <h2>Projects</h2>
       <div class="project-grid">
         <div class="project-card">
-          <h3>Neon Grid Background</h3>
-          <p>A subtle animated neon grid to give cyberpunk vibes.</p>
-          <a href="#">Learn More</a>
-        </div>
-        <div class="project-card">
           <h3>Falling Lines Animation</h3>
-          <p>Vertical neon lines falling smoothly from top to bottom.</p>
-          <a href="#">Learn More</a>
+          <p>A cool animation with falling lines.</p>
         </div>
+        <!-- Add more projects here -->
       </div>
     </section>
   </div>
 
   <audio id="bg-music" loop>
-    <source src="https://cdn.pixabay.com/download/audio/2022/11/16/audio_ae1fbdc7e4.mp3?filename=lofi-study-112191.mp3" type="audio/mp3">
+    <source src="https://cdn.pixabay.com/download/audio/2022/11/16/audio_ae1fbdc7e4.mp3?filename=lofi-study-112191.mp3" type="audio/mp3" />
   </audio>
   <button id="music-toggle" aria-label="Toggle music">🎵</button>
 
   <script>
+    // Emoji on hover for silly-text
     const sillyText = document.getElementById('silly-text');
     sillyText.addEventListener('mouseenter', (e) => {
       const emoji = document.createElement('div');
-      emoji.textContent = '😂';
-      emoji.classList.add('emoji');
-      emoji.style.left = e.clientX + 'px';
-      emoji.style.top = e.clientY + 'px';
+      emoji.className = 'emoji';
+      emoji.textContent = '😜';
+      emoji.style.left = e.pageX + 'px';
+      emoji.style.top = e.pageY + 'px';
       document.body.appendChild(emoji);
       emoji.addEventListener('animationend', () => emoji.remove());
     });
 
+    // Music toggle logic
     const bgMusic = document.getElementById('bg-music');
     const musicToggle = document.getElementById('music-toggle');
     let isPlaying = false;
+
     musicToggle.addEventListener('click', () => {
       if (isPlaying) {
         bgMusic.pause();
@@ -320,12 +302,14 @@
       isPlaying = !isPlaying;
     });
 
+    // Falling lines animation
     const fallingContainer = document.getElementById('falling-container');
     for (let i = 0; i < 80; i++) {
       const line = document.createElement('div');
       line.className = 'falling-line';
       line.style.left = Math.random() * 100 + 'vw';
-      line.style.animationDelay = Math.random() * 5 + 's';
+      line.style.animationDelay = Math.random() * 3 + 's';
+      line.style.animationDuration = (1 + Math.random() * 2) + 's';
       fallingContainer.appendChild(line);
     }
   </script>
