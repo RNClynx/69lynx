@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>69Lynx</title>
+  <title>Lynx</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=JetBrains+Mono&display=swap" rel="stylesheet" />
   <style>
     body {
@@ -24,12 +24,6 @@
       font-size: 3.5em;
       margin-bottom: 0.2em;
       letter-spacing: 2px;
-    }
-    /* Split the heading into two colors */
-    .teal {
-      color: #00ffcc;
-    }
-    .pink-glow {
       color: #ff0080;
       text-shadow:
         0 0 5px #ff0080,
@@ -38,11 +32,13 @@
         0 0 40px #ff0080;
       animation: flicker 2s infinite alternate;
       font-weight: 700;
+      z-index: 10;
     }
     p {
       color: #aaa;
       font-size: 1.2em;
       max-width: 600px;
+      z-index: 10;
     }
     .links {
       margin-top: 2em;
@@ -51,7 +47,7 @@
       gap: 0.7em;
       z-index: 10;
     }
-    .links a {
+    .links a, .glitch-link a {
       position: relative;
       text-decoration: none;
       color: #00ffcc;
@@ -59,81 +55,5 @@
       border: 1px solid #00ffcc88;
       padding: 0.7em 1.2em;
       border-radius: 6px;
-      transition: 0.3s ease;
-      font-weight: 600;
-      overflow: hidden;
-      z-index: 10;
-    }
-    /* Neon glow underline for links */
-    .links a::after {
-      content: '';
-      position: absolute;
-      width: 100%;
-      height: 2px;
-      background: #ff0080;
-      bottom: 0;
-      left: 0;
-      transform: scaleX(0);
-      transform-origin: right;
-      transition: transform 0.3s ease;
-      filter: drop-shadow(0 0 5px #ff0080);
-      z-index: 10;
-    }
-    .links a:hover::after {
-      transform: scaleX(1);
-      transform-origin: left;
-    }
-    /* Flicker glitch effect */
-    @keyframes flicker {
-      0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
-        opacity: 1;
-        text-shadow:
-          0 0 5px #ff0080,
-          0 0 10px #ff0080,
-          0 0 20px #ff0080,
-          0 0 40px #ff0080;
-      }
-      20%, 22%, 24%, 55% {
-        opacity: 0.6;
-        text-shadow: none;
-      }
-    }
-    footer {
-      position: absolute;
-      bottom: 1em;
-      font-size: 0.8em;
-      color: #555;
-      z-index: 10;
-    }
+      transit
 
-    /* Additional cyberpunk background flicker effect */
-    @keyframes backgroundFlicker {
-      0%, 100% { background-position: 0% 0%; }
-      50% { background-position: 100% 100%; }
-    }
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: radial-gradient(ellipse at center, #111 0%, #000 100%);
-      pointer-events: none;
-      animation: backgroundFlicker 15s linear infinite;
-      opacity: 0.12;
-      z-index: 1;
-    }
-
-  </style>
-</head>
-<body>
-  <h1><span class="teal">69</span><span class="pink-glow">Lynx</span></h1>
-  <p class="glitch-link">
-    <a href="https://github.com/RNClynx" target="_blank" class="glitch-link">Follow the trail</a>
-  </p>
-  <div class="links">
-    <a href="https://github.com/RNClynx" target="_blank">GitHub</a>
-    <a href="https://69lynx-com.l.ink/" target="_blank">Old L.ink Page</a>
-    <a href="mailto:69lynx@protonmail.com">Email Me</a>
-  </div>
-  <footer>© 2025 69Lynx. No rights reserved.</footer>
-</body>
-</html>
