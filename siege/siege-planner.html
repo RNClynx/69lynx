@@ -9,47 +9,24 @@
 <body>
   <div class="container">
     <h1>Siege Strats Planner</h1>
+    <h2>Select Your Side</h2>
 
-    <!-- Attacker / Defender Texts -->
-    <div class="role-texts">
-      <span id="attacker-text" class="role-text red">ATTACK</span>
-      <span id="defender-text" class="role-text blue">DEFEND</span>
+    <div id="selection-buttons">
+      <button id="attack-button" class="team-button" data-side="Attackers">Attack</button>
+      <button id="defend-button" class="team-button" data-side="Defenders">Defend</button>
     </div>
-
-    <!-- Site Selection for Attacker/Defender -->
-    <section id="site-selection" class="hidden">
-      <h2>Select Sites (5 spots)</h2>
-      <div id="site-spots" class="site-grid"></div>
-    </section>
-
-    <!-- Recommended Bans -->
-    <section id="recommended-bans" class="hidden">
-      <h3>Recommended Bans</h3>
-      <ul id="ban-list"></ul>
-    </section>
-
-    <!-- Final Map Selection -->
-    <section id="final-map-selection" class="hidden">
-      <h2>Select Your Final Map</h2>
-      <div id="map-selection">
-        <div class="map-grid">
-          <!-- Map buttons populate here dynamically -->
-        </div>
-      </div>
-    </section>
-
-    <!-- Map Details & FAQs -->
-    <section id="map-details" class="hidden">
-      <h2 id="map-name-details"></h2>
-      <img id="map-image" alt="Map Image" />
-      <p id="map-info"></p>
-      <h3>Common Callouts:</h3>
-      <ul id="callouts"></ul>
-      <h3>FAQs:</h3>
-      <ul id="faq-list"></ul>
-    </section>
   </div>
 
   <script src="siege-planner.js"></script>
 </body>
 </html>
+
+document.getElementById("attack-button").addEventListener("click", function () {
+  localStorage.setItem("selectedSide", "Attackers");
+  window.location.href = "map-selection.html";  // Redirect to map selection
+});
+
+document.getElementById("defend-button").addEventListener("click", function () {
+  localStorage.setItem("selectedSide", "Defenders");
+  window.location.href = "map-selection.html";  // Redirect to map selection
+});
