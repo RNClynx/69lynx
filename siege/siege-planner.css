@@ -26,6 +26,15 @@ select {
   border-radius: 5px;
   margin-top: 0.5rem;
   margin-bottom: 1rem;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+  cursor: pointer;
+}
+
+select:hover,
+select:focus {
+  border-color: #ff00ff; /* Pink highlight on hover/focus */
+  background-color: #222;
+  outline: none;
 }
 
 section {
@@ -37,7 +46,8 @@ section {
   box-shadow: 0 0 10px #00ffff33;
 }
 
-#counters, #map-details {
+#counters,
+#map-details {
   margin-top: 1rem;
   line-height: 1.6;
   background-color: #121212;
@@ -52,7 +62,21 @@ ul {
   padding-left: 1.5rem;
 }
 
-h3, h4 {
+h3,
+h4 {
   color: #00ffff;
   margin-bottom: 0.5rem;
+}
+
+a {
+  color: #00ffff;
+  text-decoration: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  text-decoration: underline;
+  color: #ff00ff;
 }
