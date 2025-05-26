@@ -2,14 +2,43 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Siege Strats Planner</title>
   <link rel="stylesheet" href="siege-planner.css" />
 </head>
 <body>
-  <div id="app">
-    <!-- View container for dynamic page switching -->
-    <div id="view"></div>
+  <div class="container">
+    <h1>Siege Strats Planner</h1>
+
+    <!-- Buttons for Attack and Defense -->
+    <div class="role-selection">
+      <button class="role-btn" id="attack-btn">Attackers</button>
+      <button class="role-btn" id="defense-btn">Defenders</button>
+    </div>
+
+    <!-- Map Selection Section -->
+    <section id="map-selection">
+      <h2>Select a Map</h2>
+      <div class="map-buttons">
+        <!-- Placeholder for clickable map buttons -->
+        <button class="map-btn" data-map="Bank">Bank</button>
+        <button class="map-btn" data-map="Consulate">Consulate</button>
+        <button class="map-btn" data-map="Clubhouse">Clubhouse</button>
+      </div>
+    </section>
+
+    <!-- Map and Operator Display -->
+    <section id="map-display">
+      <h2 id="map-name">Select a map</h2>
+      <img id="map-image" src="" alt="Map Image" />
+      <p id="operator-count">Operators: </p>
+    </section>
+
+    <!-- Operators List -->
+    <section id="operator-list">
+      <h3>Operators</h3>
+      <ul id="operators"></ul>
+    </section>
   </div>
 
   <script src="siege-planner.js"></script>

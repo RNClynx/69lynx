@@ -1,127 +1,73 @@
-/* Basic Reset */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-/* Body and container styles */
 body {
   font-family: Arial, sans-serif;
-  background-color: #222;
-  color: #fff;
+  background-color: #f0f0f0;
+  color: #333;
   margin: 0;
   padding: 20px;
 }
 
 .container {
-  max-width: 1200px;
-  margin: 0 auto;
-  text-align: center;
-}
-
-/* Header */
-h1 {
-  color: #00ffff;
-  font-size: 3rem;
-  margin-bottom: 2rem;
-}
-
-/* Buttons */
-button {
-  font-size: 1.2rem;
-  padding: 1rem 2rem;
-  margin: 1rem;
-  cursor: pointer;
-  border: none;
+  max-width: 800px;
+  margin: auto;
+  background: white;
+  padding: 20px;
   border-radius: 8px;
-  color: #fff;
-  font-weight: bold;
-  transition: all 0.3s ease;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-button.red {
-  background-color: #ff3333;
+h1 {
+  text-align: center;
+  color: #007bff;
 }
 
-button.blue {
-  background-color: #3366ff;
-}
-
-button:hover {
-  transform: scale(1.1);
-}
-
-/* Map selection grid */
-#map-selection {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
-  margin-top: 2rem;
-}
-
-.map-item {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #333;
-  border-radius: 12px;
-  height: 150px;
+button {
+  padding: 10px 20px;
+  margin: 10px;
+  border-radius: 8px;
+  cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
-.map-item img {
-  max-width: 100%;
-  max-height: 100%;
-  border-radius: 12px;
-  transition: opacity 0.3s ease;
+button:hover {
+  background-color: #007bff;
+  color: white;
 }
 
-.map-item:hover {
-  background-color: #444;
+.role-selection {
+  text-align: center;
+  margin-bottom: 20px;
 }
 
-.map-item:hover img {
-  opacity: 0.8;
+.map-buttons {
+  text-align: center;
+  margin-top: 20px;
 }
 
-/* Operator section */
-#operator-section {
-  margin-top: 3rem;
-  padding: 2rem;
-  background-color: #111;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-#operator-section h2 {
-  color: #ff00ff;
-  font-size: 2rem;
-}
-
-#operator-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1rem;
-  margin-top: 2rem;
-}
-
-.operator-card {
-  background-color: #222;
-  padding: 1rem;
+.map-btn {
+  padding: 10px;
+  margin: 10px;
+  background-color: #555;
+  color: white;
+  border: none;
   border-radius: 8px;
-  color: #fff;
-  transition: all 0.3s ease;
 }
 
-.operator-card:hover {
-  transform: scale(1.05);
-  background-color: #333;
+#map-display {
+  text-align: center;
+  margin-top: 20px;
 }
 
-.operator-card img {
-  width: 50px;
-  height: 50px;
-  margin-bottom: 1rem;
+#map-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+}
+
+#operators {
+  margin-top: 20px;
 }
