@@ -32,3 +32,5 @@ const operators = [
   { name: "Thorn", counters: ["Brava", "Twitch", "Iq"] },
   { name: "Fenrir", counters: ["Brava", "Twitch", "Iq"] }
 ];
+console.log('Operators:', operators);
+export default operators;
