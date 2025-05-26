@@ -3,20 +3,28 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Siege Planner</title>
+  <title>Rainbow Six Siege Strategy Planner</title>
   <link rel="stylesheet" href="siege-planner.css" />
 </head>
 <body>
-  <h1>Rainbow Six Siege Strategy Planner</h1>
+  <h1>Rainbow Six Siege Defense Strategy Planner</h1>
 
-  <label for="operator-select">Select a Defense Operator:</label>
-  <select id="operator-select">
-    <option value="">Choose an operator</option>
-  </select>
+  <section>
+    <label for="operator-select">Select Defense Operator:</label><br/>
+    <select id="operator-select">
+      <option value="">Select Defense Operator</option>
+    </select>
+    <div id="counters">Choose an operator to see counters.</div>
+  </section>
 
-  <div id="counters">Choose an operator to see counters.</div>
+  <section style="margin-top: 2rem;">
+    <label for="map-select">Select Ranked Map:</label><br/>
+    <select id="map-select">
+      <option value="">Select Ranked Map</option>
+    </select>
+    <div id="map-details">Choose a map to see details.</div>
+  </section>
 
-  <script src="siege-operators.js"></script>
-  <script src="siege-planner.js"></script>
+  <script type="module" src="siege-planner.js"></script>
 </body>
 </html>
