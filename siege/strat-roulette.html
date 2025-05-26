@@ -1,25 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>strat roulette</title>
+  <meta charset="UTF-8">
+  <title>Strat Roulette</title>
   <style>
     body {
       background: #000;
       color: #ff2a6d;
       font-family: 'JetBrains Mono', monospace;
-      margin: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
     }
-    a {
-      color: #ff2a6d;
-      text-decoration: none;
-      border-bottom: 1px solid #ff2a6d;
+
+    .box {
+      background: #111;
+      border: 2px solid #ff2a6d;
+      border-radius: 12px;
+      padding: 2rem;
+      text-align: center;
+      box-shadow: 0 0 20px #ff2a6d88;
+      max-width: 700px;
+    }
+
+    button {
+      background: #ff2a6d;
+      color: #000;
+      font-weight: bold;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 1rem;
+    }
+
+    button:hover {
+      background: #ff7aa2;
     }
   </style>
 </head>
 <body>
-  <h1>strat roulette 2025 vers!!</h1>
-  <p>Thought to bring it back hope you guys enjoy!!</p>
-  <p><a href="siege-planner.html">← Back to Planner</a></p>
+  <div class="box">
+    <h1>🎲 Strat Roulette</h1>
+    <p id="strat">Click to receive your fate.</p>
+    <button onclick="generateStrat()">Roll</button>
+  </div>
+
+  <script>
+    const originalStrats = [
+      "Only use pistols.",
+      "Melee only until someone/everyone👀 gets a kill.",
+      "Everyone must crouch the entire round.",
+      "No droning allowed.",
+      "No reinforcing allowed. Raw💦💦 defense only.",
+      "Everyone rush through the same window/door.",
+      "You can’t stop moving unless planting/defusing.",
+      "Everyone must use shotguns.",
+      "Only use secondaries.",
+      "Only pick 1-speed ops.",
+      "Only pick 3-speed ops.",
+      "Everyone has to TK I dont make the rules.",
+      "You can’t shoot unless someone pings the enemy.",
+      "Must plant in site no matter what.",
+      "You must jump through a window every 30 seconds, to stay healthy!",
+      "You must all stay on one floor.",
+      "Only spawn peek until someone dies.",
+      "Completely open site then defend it (tachanka style)",
+      "Only anchor. No leaving site.",
+      "You must play with inverted mouse, if ur weird and already do then turn it off.",
+      "Only breach walls – no window/door entry.",
+      "You must teamkill the person closest to you if you miss your whole mag. (haha this really just is a way to get you to TK your teammates they wont know i wrote this tho unless ur a SNITCH!!!)",
+      "Use shield ops only.",
+      "No gadgets allowed. waste them.",
+      "Use only ops you’ve never played before.",
+      "Only use gadgets to kill (e.g., C4, nades, etc).",
+      "You must gaurd the bomb carrier with your life if neccesary. GET DOWN MR PRESIDENT!!!!!!!!!!!!",
+      "Everyone has to say who they think is the worst at the game (im an instigator).",
+      "Only hip fire allowed.",
+      "Call out fake intel to mess with your team. (dont be a snitch!!)",
+      "Must slow walk everywhere.",
+      "You can only ADS if prone.",
+      "turn off all in game sound and rely on your teammates to tell you where enemies are.",
+      "Run in site or your mom will be dissapointed",
+      "Every kill must be from a different player. (e.g., if player 1 kills, player 2 must kill next, etc.)",
+      "One teammate is the 'president'. Convince everyone you will guys protect them then tk the president.",
+      "Must use a flashbang before killing anyone.",
+      "Each person calls their target and cant shoot anyone else.",
+      "No reloading allowed all round. (announce after operator selection so they cant equip lmg lol)",
+      "Must use voice lines and pings only  no talking.",
+      "Play the round with monitor turned off (spectator tells info).",
+      "Each player gets 1 bullet.",
+      "Everyone must vault over something before killing.",
+      "Only one person can enter site others must bait.",
+      "Plant without killiing anyone.",
+      "Must tbag all dead teamates, they deserve it.",
+      "Be toxic in chat, then potato aim and accuse the enemy of cheating.",
+      "Rat kills only.",
+    ];
+
+    let stratPool = [...originalStrats];
+
+    function generateStrat() {
+      if (stratPool.length === 0) {
+        stratPool = [...originalStrats]; // reset if empty
+      }
+      const index = Math.floor(Math.random() * stratPool.length);
+      const strat = stratPool.splice(index, 1)[0];
+      document.getElementById("strat").textContent = strat;
+    }
+  </script>
 </body>
 </html>
