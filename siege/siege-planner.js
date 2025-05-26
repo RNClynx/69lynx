@@ -1,35 +1,23 @@
-// When page loads, populate dropdown with defense operators from siegeOperators
-window.addEventListener('DOMContentLoaded', () => {
-  const select = document.getElementById('operator-select');
-  const countersContainer = document.getElementById('counters-container');
+document.addEventListener('DOMContentLoaded', () => {
+  const operatorSelect = document.getElementById('operator-select');
+  const countersDiv = document.getElementById('counters');
 
-  // Fill select options
-  siegeOperators.forEach(op => {
+  // Populate the operator select dropdown
+  operators.forEach(operator => {
     const option = document.createElement('option');
-    option.value = op.name;
-    option.textContent = op.name;
-    select.appendChild(option);
+    option.value = operator.name;
+    option.textContent = operator.name;
+    operatorSelect.appendChild(option);
   });
 
-  // When user picks an operator
-  select.addEventListener('change', () => {
-    const selectedName = select.value;
-    countersContainer.innerHTML = ''; // clear previous counters
-
-    if (!selectedName) return;
-
-    const operator = siegeOperators.find(op => op.name === selectedName);
-
-    if (!operator || operator.counters.length === 0) {
-      countersContainer.textContent = 'No counters found.';
-      return;
+  // Event listener for operator selection
+  operatorSelect.addEventListener('change', (event) => {
+    const selectedOperator = event.target.value;
+    if (selectedOperator) {
+      const operator = operators.find(op => op.name === selectedOperator);
+      countersDiv.innerHTML = `<h3>${operator.name} Counters:</h3><ul>${operator.counters.map(counter => `<li>${counter}</li>`).join('')}</ul>`;
+    } else {
+      countersDiv.innerHTML = 'Choose an operator to see counters.';
     }
-
-    operator.counters.forEach(counterName => {
-      const div = document.createElement('div');
-      div.className = 'counter-operator';
-      div.textContent = counterName;
-      countersContainer.appendChild(div);
-    });
   });
 });
