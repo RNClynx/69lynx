@@ -10,34 +10,43 @@
   <div class="container">
     <h1>Siege Strats Planner</h1>
 
-    <!-- Buttons for Attack and Defense -->
-    <div class="role-selection">
-      <button class="role-btn" id="attack-btn">Attackers</button>
-      <button class="role-btn" id="defense-btn">Defenders</button>
+    <!-- Attacker / Defender Texts -->
+    <div class="role-texts">
+      <span id="attacker-text" class="role-text red">ATTACK</span>
+      <span id="defender-text" class="role-text blue">DEFEND</span>
     </div>
 
-    <!-- Map Selection Section -->
-    <section id="map-selection">
-      <h2>Select a Map</h2>
-      <div class="map-buttons">
-        <!-- Placeholder for clickable map buttons -->
-        <button class="map-btn" data-map="Bank">Bank</button>
-        <button class="map-btn" data-map="Consulate">Consulate</button>
-        <button class="map-btn" data-map="Clubhouse">Clubhouse</button>
+    <!-- Site Selection for Attacker/Defender -->
+    <section id="site-selection" class="hidden">
+      <h2>Select Sites (5 spots)</h2>
+      <div id="site-spots" class="site-grid"></div>
+    </section>
+
+    <!-- Recommended Bans -->
+    <section id="recommended-bans" class="hidden">
+      <h3>Recommended Bans</h3>
+      <ul id="ban-list"></ul>
+    </section>
+
+    <!-- Final Map Selection -->
+    <section id="final-map-selection" class="hidden">
+      <h2>Select Your Final Map</h2>
+      <div id="map-selection">
+        <div class="map-grid">
+          <!-- Map buttons populate here dynamically -->
+        </div>
       </div>
     </section>
 
-    <!-- Map and Operator Display -->
-    <section id="map-display">
-      <h2 id="map-name">Select a map</h2>
-      <img id="map-image" src="" alt="Map Image" />
-      <p id="operator-count">Operators: </p>
-    </section>
-
-    <!-- Operators List -->
-    <section id="operator-list">
-      <h3>Operators</h3>
-      <ul id="operators"></ul>
+    <!-- Map Details & FAQs -->
+    <section id="map-details" class="hidden">
+      <h2 id="map-name-details"></h2>
+      <img id="map-image" alt="Map Image" />
+      <p id="map-info"></p>
+      <h3>Common Callouts:</h3>
+      <ul id="callouts"></ul>
+      <h3>FAQs:</h3>
+      <ul id="faq-list"></ul>
     </section>
   </div>
 
