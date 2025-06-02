@@ -1,3 +1,5 @@
+document.addEventListener('DOMContentLoaded', () => {
+
 // Emoji + jiggle hover effect on #silly-text
 const sillyText = document.getElementById('silly-text');
 
@@ -34,7 +36,8 @@ for (let i = 0; i < totalLines; i++) {
   line.style.animationDuration = (3 + Math.random() * 4) + 's';
 
   // Random animation delay to stagger lines
-  line.style.animationDelay = (Math.random() * 7) + 's';
+  line.style.animationDelay = (Math.random() * 3) + 's';
 
   fallingContainer.appendChild(line);
 }
+});

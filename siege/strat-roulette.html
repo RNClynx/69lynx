@@ -27,7 +27,7 @@
     }
 
     button {
-      background: #ff2a6d;
+      background: #ff2a6d;  
       color: #000;
       font-weight: bold;
       border: none;
@@ -45,72 +45,66 @@
 <body>
   <div class="box">
     <h1>🎲 Strat Roulette</h1>
-    <p id="strat">Click to receive your fate.</p>
+    <p id="strat"> roll if sigma </p>
     <button onclick="generateStrat()">Roll</button>
   </div>
 
-  <script>
+    <script>
+  document.addEventListener("DOMContentLoaded", function () {
     const originalStrats = [
-      "Only use pistols.",
-      "Melee only until someone/everyone👀 gets a kill.",
-      "Everyone must crouch the entire round.",
-      "No droning allowed.",
-      "No reinforcing allowed. Raw💦💦 defense only.",
-      "Everyone rush through the same window/door.",
-      "You can’t stop moving unless planting/defusing.",
-      "Everyone must use shotguns.",
-      "Only use secondaries.",
-      "Only pick 1-speed ops.",
-      "Only pick 3-speed ops.",
-      "Everyone has to TK I dont make the rules.",
-      "You can’t shoot unless someone pings the enemy.",
-      "Must plant in site no matter what.",
-      "You must jump through a window every 30 seconds, to stay healthy!",
-      "You must all stay on one floor.",
-      "Only spawn peek until someone dies.",
-      "Completely open site then defend it (tachanka style)",
-      "Only anchor. No leaving site.",
-      "You must play with inverted mouse, if ur weird and already do then turn it off.",
-      "Only breach walls – no window/door entry.",
-      "You must teamkill the person closest to you if you miss your whole mag. (haha this really just is a way to get you to TK your teammates they wont know i wrote this tho unless ur a SNITCH!!!)",
-      "Use shield ops only.",
-      "No gadgets allowed. waste them.",
-      "Use only ops you’ve never played before.",
-      "Only use gadgets to kill (e.g., C4, nades, etc).",
-      "You must gaurd the bomb carrier with your life if neccesary. GET DOWN MR PRESIDENT!!!!!!!!!!!!",
-      "Everyone has to say who they think is the worst at the game (im an instigator).",
-      "Only hip fire allowed.",
-      "Call out fake intel to mess with your team. (dont be a snitch!!)",
-      "Must slow walk everywhere.",
-      "You can only ADS if prone.",
-      "turn off all in game sound and rely on your teammates to tell you where enemies are.",
-      "Run in site or your mom will be dissapointed",
-      "Every kill must be from a different player. (e.g., if player 1 kills, player 2 must kill next, etc.)",
-      "One teammate is the 'president'. Convince everyone you will guys protect them then tk the president.",
-      "Must use a flashbang before killing anyone.",
-      "Each person calls their target and cant shoot anyone else.",
-      "No reloading allowed all round. (announce after operator selection so they cant equip lmg lol)",
-      "Must use voice lines and pings only  no talking.",
-      "Play the round with monitor turned off (spectator tells info).",
-      "Each player gets 1 bullet.",
-      "Everyone must vault over something before killing.",
-      "Only one person can enter site others must bait.",
-      "Plant without killiing anyone.",
-      "Must tbag all dead teamates, they deserve it.",
-      "Be toxic in chat, then potato aim and accuse the enemy of cheating.",
-      "Rat kills only.",
-    ];
+      "Pathfinder operators only.",
+      "You can only communicate using Rainbow Six Siege map callouts, no extra words.",
+      "Every time you get a kill, spin in place until another teamate gets a kill (void if last alive lol).",
+      "Reinforce or barricade the smallest room you can find and stay there until the round ends(or if last alive).",
+      "No one is allowed to use their primary weapon—secondary weapons and gadgets only.",
+      "Each player must hold a different room alone.",
+      "You can only move between rooms by vaulting over objects or obstacles—no walking straight through doorways.",
+      "Swap your crouch and prone keybinds for the entire game.",
+      "Everyone must play with their in-game sensitivity set to maximum OR minimum.",
+      "You can only enter the objective area by vaulting or rappelling (if possible).",
+      "Convince your team to play as if you are all in a horror movie. no talking, only whispers and screams.",
+      "Close your eyes for 10 seconds every time you get a kill.",
+      "Narrate every action you take in a dramatic voice over voice chat.",
+      "No one is allowed to use any sight but iron sight.",
+      "Follow the dumbest teammate everywhere they go.",
+      "Every time you reload, swap to your secondary and get a kill before swapping back.",
+      "You can only get kills with environmental damage (explosives, traps, fall damage).",
+      "Play the round with your monitor brightness set to minimum.",
+      "Say lets play normal game real quick, then give false intel and lead all your teamates to doom. kudos if you can convince them to do it.",
+      "Type your favorite content creator in all chat, then defend them like a crazy fan if anyone disagrees. kudos if you start a debate mid-round.",
+      "You can only use voice chat for intel and must sing your callouts.",
+      "Every time you get a kill, cannot use your primary weapon for the rest of the round.",
+      "You can only crawl until you get a kill.",
+      "You can only use a shotgun to open lines of sight, no breaching .",
+      "Play the round with your mouse/controls inverted.",
+      "Defend or attack the objective by hiding in plain sight and pretending it's not there.",
+      "You cannot stop moving unless planting/defusing.",
+      "Play the round with your headphones on backwards.",
+      "You can only shoot while moving backwards.",
+      "Announce every reload in all chat.",
+      "Play the round with your HUD turned off.",
+      "Play the entire round from outside of the building.",
+      "Use gadgets to distract enemies for your team",
+      "Crouch spam every doorway you pass through.",
+      "Designate one player as the 'decoy' who must run around and distract enemies while the rest of the team plays normally.",
+      "Designate one player as the 'top frag'  who is the only one allowed to get kills, the rest of the team must support them.",
+      "Designate one player as the 'leader' who must give orders to the rest of the team.",
+      "Using all chat convince the enemy team to do a specific strat, then betray them.",
+      "Using all chat, convince the enemy team you are friendly and want to knife fight, then betray them.",
+      "Go outside and touch grass! but ik youre just gonna sit there and click the button again.",
+      ];
 
     let stratPool = [...originalStrats];
 
-    function generateStrat() {
+    window.generateStrat = function () {
       if (stratPool.length === 0) {
         stratPool = [...originalStrats]; // reset if empty
       }
       const index = Math.floor(Math.random() * stratPool.length);
       const strat = stratPool.splice(index, 1)[0];
       document.getElementById("strat").textContent = strat;
-    }
-  </script>
+    };
+  });
+</script>
 </body>
 </html>
