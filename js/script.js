@@ -1,25 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-// Emoji + jiggle hover effect on #silly-text
-const sillyText = document.getElementById('silly-text');
-
-sillyText.addEventListener('mouseenter', (e) => {
-  // Create emoji element
-  const emoji = document.createElement('div');
-  emoji.textContent = '😂';
-  emoji.classList.add('emoji');
-
-  // Position emoji near cursor
-  emoji.style.left = e.clientX + 'px';
-  emoji.style.top = e.clientY + 'px';
-
-  document.body.appendChild(emoji);
-
-  // Remove emoji after animation ends
-  emoji.addEventListener('animationend', () => {
-    emoji.remove();
-  });
-});
 
 // Falling lines animation setup
 const fallingContainer = document.getElementById('falling-container');
